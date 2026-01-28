@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Chief Ecosystem - Tutorial Completo</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      color: var(--gray-800);
+      background: var(--gray-50);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero .subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.875rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .badge.success { background: rgba(16, 185, 129, 0.2); border-color: var(--success); }
+    .badge.primary { background: rgba(99, 102, 241, 0.2); border-color: var(--primary); }
+
+    /* Philosophy Section */
+    .philosophy {
+      padding: 4rem 0;
+      background: white;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--gray-900);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .comparison-card {
+      padding: 2rem;
+      border-radius: 1rem;
+      border: 2px solid var(--gray-200);
+    }
+
+    .comparison-card.human {
+      border-color: var(--primary);
+      background: linear-gradient(to bottom, rgba(99, 102, 241, 0.05), transparent);
+    }
+
+    .comparison-card.system {
+      border-color: var(--success);
+      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), transparent);
+    }
+
+    .comparison-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .comparison-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .comparison-card li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .comparison-card li::before {
+      content: "→";
+      color: var(--gray-400);
+    }
+
+    /* Phases Section */
+    .phases {
+      padding: 4rem 0;
+    }
+
+    .phase-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .phase-number {
+      width: 3rem;
+      height: 3rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .phase-meta {
+      flex: 1;
+    }
+
+    .phase-meta h3 {
+      font-size: 1.25rem;
+      color: var(--gray-900);
+    }
+
+    .phase-meta .meta-info {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+    }
+
+    .phase-content h4 {
+      font-size: 1rem;
+      color: var(--gray-700);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .command-box {
+      background: var(--gray-900);
+      color: #10b981;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.875rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+
+    .command-box .comment {
+      color: #6b7280;
+    }
+
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .deliverable-item {
+      background: var(--gray-100);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .deliverable-item strong {
+      display: block;
+      color: var(--gray-900);
+      margin-bottom: 0.25rem;
+    }
+
+    .deliverable-item span {
+      color: var(--gray-600);
+    }
+
+    .gate-box {
+      background: linear-gradient(to right, rgba(16, 185, 129, 0.1), transparent);
+      border-left: 4px solid var(--success);
+      padding: 1rem 1.5rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      margin: 1.5rem 0;
+    }
+
+    .gate-box h4 {
+      color: var(--success);
+      margin: 0 0 0.5rem;
+    }
+
+    .gate-box ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    .gate-box li {
+      color: var(--gray-700);
+      font-size: 0.875rem;
+    }
+
+    /* Metrics Section */
+    .metrics {
+      padding: 4rem 0;
+      background: white;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .metric-card {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 1rem;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+    }
+
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .metric-label {
+      font-size: 1rem;
+      color: var(--gray-600);
+      margin-top: 0.5rem;
+    }
+
+    .metric-detail {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      margin-top: 0.25rem;
+    }
+
+    /* Commands Reference */
+    .commands {
+      padding: 4rem 0;
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .command-item {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .command-item code {
+      background: var(--gray-900);
+      color: var(--success);
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+
+    .command-item span {
+      color: var(--gray-600);
+      font-size: 0.875rem;
+    }
+
+    /* Interactive Checklist */
+    .checklist {
+      padding: 4rem 0;
+      background: white;
+    }
+
+    .checklist-phase {
+      margin-bottom: 2rem;
+    }
+
+    .checklist-phase h3 {
+      font-size: 1.125rem;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .checklist-phase h3 .status {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      background: var(--gray-200);
+      color: var(--gray-600);
+    }
+
+    .checklist-phase h3 .status.complete {
+      background: var(--success);
+      color: white;
+    }
+
+    .checklist-items {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--gray-50);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checklist-item:hover {
+      background: var(--gray-100);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 1.25rem;
+      height: 1.25rem;
+      cursor: pointer;
+    }
+
+    .checklist-item.checked {
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .checklist-item.checked label {
+      text-decoration: line-through;
+      color: var(--gray-500);
+    }
+
+    .checklist-item label {
+      cursor: pointer;
+      flex: 1;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--gray-600);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1rem;
+      }
+
+      .phase-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .badges {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Copy Chief Ecosystem</h1>
+      <p class="subtitle">Masterclass: De Zero à Copy Nível Profissional</p>
+      <div class="badges">
+        <span class="badge success">v5.3 - Jan 2026</span>
+        <span class="badge primary">5 Fases Automatizadas</span>
+        <span class="badge">200+ Quotes VOC</span>
+        <span class="badge">10 Fases HELIX</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="philosophy">
+    <div class="container">
+      <h2 class="section-title">🎯 A Nova Divisão de Trabalho</h2>
+      <div class="comparison-grid">
+        <div class="comparison-card human">
+          <h3>👤 Humano (Estrategista)</h3>
+          <ul>
+            <li>Define a VISÃO da oferta</li>
+            <li>Valida MUP/MUS (decisões críticas)</li>
+            <li>Aprova gates entre fases</li>
+            <li>Faz ajustes finais de tom</li>
+            <li>Decide preço e posicionamento</li>
+          </ul>
+        </div>
+        <div class="comparison-card system">
+          <h3>🤖 Sistema (Executor)</h3>
+          <ul>
+            <li>Extrai 200+ quotes VOC</li>
+            <li>Minera Ads Library com Scale Score</li>
+            <li>Preenche 10 fases HELIX</li>
+            <li>Produz VSL, LP, Criativos, Emails</li>
+            <li>Valida consistência automática</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phases -->
+  <section class="phases">
+    <div class="container">
+      <h2 class="section-title">📋 As 5 Fases do Workflow</h2>
+
+      <!-- Phase 0 -->
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-number">0</div>
+          <div class="phase-meta">
+            <h3>Setup Inicial</h3>
+            <span class="meta-info">⏱️ 5 min • 👤 Humano</span>
+          </div>
+        </div>
+        <div class="phase-content">
+          <p>Criar estrutura da oferta com um único comando.</p>
+
+          <div class="command-box">
+            <span class="comment"># Scaffolding completo da oferta</span><br>
+            /ecosystem-guide<br><br>
+            <span class="comment"># Ou manualmente:</span><br>
+            "crie estrutura para oferta [NOME] no nicho [NICHO]"
+          </div>
+
+          <h4>Estrutura Criada:</h4>
+          <div class="deliverables-grid">
+            <div class="deliverable-item">
+              <strong>research/</strong>
+              <span>VOC, competitors, mechanism, avatar</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>briefings/phases/</strong>
+              <span>10 fases HELIX</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>production/</strong>
+              <span>VSL, LP, creatives, emails</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Planning files</strong>
+              <span>task_plan.md, findings.md, progress.md</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-number">1</div>
+          <div class="phase-meta">
+            <h3>Research Profundo</h3>
+            <span class="meta-info">⏱️ 30-60 min (parallel) • 🤖 Sistema</span>
+          </div>
+        </div>
+        <div class="phase-content">
+          <p>4 módulos de pesquisa rodando simultaneamente.</p>
+
+          <div class="command-box">
+            <span class="comment"># RECOMENDADO - 4 módulos simultâneos</span><br>
+            /squad-research [oferta]<br><br>
+            <span class="comment"># Alternativa sequential (mais lento)</span><br>
+            /helix-parallel [oferta]
+          </div>
+
+          <h4>O Que o Sistema Faz:</h4>
+          <div class="deliverables-grid">
+            <div class="deliverable-item">
+              <strong>VOC Module</strong>
+              <span>200+ quotes de YouTube, TikTok, Instagram, Reddit</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Competitors Module</strong>
+              <span>Ads Library Spy com Scale Score</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Mechanism Module</strong>
+              <span>Pesquisa MUP/MUS do nicho</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Avatar Module</strong>
+              <span>DRE Framework, sinestesia, linguagem</span>
+            </div>
+          </div>
+
+          <div class="gate-box">
+            <h4>✓ Gate: Research Complete</h4>
+            <ul>
+              <li>synthesis.md com confidence ≥70%</li>
+              <li>voc/summary.md com 200+ quotes</li>
+              <li>competitors/ads-library-spy.md com Scale Score</li>
+              <li>mechanism/summary.md + avatar/summary.md</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-number">2</div>
+          <div class="phase-meta">
+            <h3>Briefing HELIX</h3>
+            <span class="meta-info">⏱️ 60-90 min • 🤖 Sistema + 👤 Decisões</span>
+          </div>
+        </div>
+        <div class="phase-content">
+          <p>Sistema preenche 10 fases. Humano valida MUP/MUS.</p>
+
+          <div class="command-box">
+            /helix-system-agent
+          </div>
+
+          <h4>As 10 Fases HELIX:</h4>
+          <div class="deliverables-grid">
+            <div class="deliverable-item">
+              <strong>1-4: Foundation</strong>
+              <span>Identificação, Mineração, Avatar, Ângulos</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>5-6: Core (⚠️ DECISÃO)</strong>
+              <span>MUP e MUS - Humano escolhe opção</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>7-8: Offer</strong>
+              <span>Big Offer, Stack, Pitch</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>9-10: Execution</strong>
+              <span>Criativos, Validação STAND</span>
+            </div>
+          </div>
+
+          <div class="gate-box">
+            <h4>✓ Gate: Briefing Complete</h4>
+            <ul>
+              <li>10/10 fases preenchidas</li>
+              <li>MUP STAND Score ≥80%</li>
+              <li>MUS STAND Score ≥80%</li>
+              <li>/copy-critic passed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-number">3</div>
+          <div class="phase-meta">
+            <h3>Produção de Copy</h3>
+            <span class="meta-info">⏱️ 30-60 min • 🤖 Sistema</span>
+          </div>
+        </div>
+        <div class="phase-content">
+          <p>Sistema produz todos os deliverables automaticamente.</p>
+
+          <div class="command-box">
+            /produce-offer [oferta]
+          </div>
+
+          <h4>Deliverables Produzidos:</h4>
+          <div class="deliverables-grid">
+            <div class="deliverable-item">
+              <strong>VSL Script</strong>
+              <span>Script completo com hooks e CTAs</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Landing Page</strong>
+              <span>14 blocos persuasivos</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>7 Criativos</strong>
+              <span>Diferentes formatos e ângulos</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>5 Emails</strong>
+              <span>Sequência de nurturing</span>
+            </div>
+          </div>
+
+          <h4>Output Obrigatório (Seção GATE):</h4>
+          <div class="command-box">
+            ## GATE: Arquivos Lidos<br>
+            - research/synthesis.md → Sinestesia: "acordar 3AM"<br>
+            - briefings/phases/fase05_mup.md → MUP: "Cortisol"<br>
+            - briefings/phases/fase06_mus.md → MUS: "Reset"<br><br>
+            ## Consistência<br>
+            - MUP usado: [descrição] ← matches briefing ✓
+          </div>
+
+          <div class="gate-box">
+            <h4>✓ Gate: Production Complete</h4>
+            <ul>
+              <li>Seção GATE presente em todas as copys</li>
+              <li>MUP/MUS consistente com briefing</li>
+              <li>VOC refletido (linguagem do avatar)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-card">
+        <div class="phase-header">
+          <div class="phase-number">4</div>
+          <div class="phase-meta">
+            <h3>Validação Final</h3>
+            <span class="meta-info">⏱️ 15-30 min • 🤖 Sistema + 👤 Aprovação</span>
+          </div>
+        </div>
+        <div class="phase-content">
+          <p>Multi-model review e stress-test adversarial.</p>
+
+          <div class="command-box">
+            <span class="comment"># Review completo</span><br>
+            /review-all [oferta]<br><br>
+            <span class="comment"># Stress-test adversarial</span><br>
+            /copy-critic
+          </div>
+
+          <h4>Validações Automáticas:</h4>
+          <div class="deliverables-grid">
+            <div class="deliverable-item">
+              <strong>STAND Score</strong>
+              <span>Specificity, Truth, Actionable, Need, Differentiated</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Consistency</strong>
+              <span>MUP/MUS em todos deliverables</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>VOC Reflection</strong>
+              <span>≥10 quotes da pesquisa na copy</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>Compliance</strong>
+              <span>Sem claims proibidos</span>
+            </div>
+          </div>
+
+          <div class="gate-box">
+            <h4>✓ Gate: Final Approval</h4>
+            <ul>
+              <li>STAND Score ≥85%</li>
+              <li>Stress-test passed</li>
+              <li>Humano leu e aprovou</li>
+              <li>Pronto para publicar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Metrics -->
+  <section class="metrics">
+    <div class="container">
+      <h2 class="section-title">📊 Métricas de Impacto</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">5x</div>
+          <div class="metric-label">Mais Rápido</div>
+          <div class="metric-detail">40-60h → 8-12h por oferta</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">4x</div>
+          <div class="metric-label">Mais Dados VOC</div>
+          <div class="metric-detail">20-50 → 200+ quotes</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">+35%</div>
+          <div class="metric-label">Consistência</div>
+          <div class="metric-detail">MUP/MUS alinhados em tudo</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">-80%</div>
+          <div class="metric-label">Retrabalho</div>
+          <div class="metric-detail">30-40% → 5-10%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commands Reference -->
+  <section class="commands">
+    <div class="container">
+      <h2 class="section-title">⌨️ Comandos Rápidos</h2>
+      <div class="commands-grid">
+        <div class="command-item">
+          <code>/ecosystem-guide</code>
+          <span>Começar oferta nova</span>
+        </div>
+        <div class="command-item">
+          <code>/squad-research</code>
+          <span>Research paralelo (4 módulos)</span>
+        </div>
+        <div class="command-item">
+          <code>/helix-system-agent</code>
+          <span>Preencher briefing HELIX</span>
+        </div>
+        <div class="command-item">
+          <code>/produce-offer</code>
+          <span>Produzir todos deliverables</span>
+        </div>
+        <div class="command-item">
+          <code>/copy-critic</code>
+          <span>Validar e stress-test</span>
+        </div>
+        <div class="command-item">
+          <code>/review-all</code>
+          <span>Multi-model review</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Checklist -->
+  <section class="checklist">
+    <div class="container">
+      <h2 class="section-title">✅ Checklist Interativo</h2>
+
+      <div class="checklist-phase" data-phase="0">
+        <h3>Fase 0 - Setup <span class="status">0/3</span></h3>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Estrutura da oferta criada</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Biblioteca do nicho verificada</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Planning files inicializados</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="1">
+        <h3>Fase 1 - Research <span class="status">0/5</span></h3>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>/squad-research executado</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>200+ quotes VOC extraídas</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Scale Score calculado (competitors)</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>synthesis.md com ≥70% confidence</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Research Gate PASS</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="2">
+        <h3>Fase 2 - Briefing <span class="status">0/5</span></h3>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>10/10 fases HELIX preenchidas</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>MUP validado (STAND ≥80%)</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>MUS validado (STAND ≥80%)</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>/copy-critic executado</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Briefing Gate PASS</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="3">
+        <h3>Fase 3 - Produção <span class="status">0/5</span></h3>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>/produce-offer executado</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>VSL + LP + Criativos + Emails prontos</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Seção GATE presente em todas copys</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>MUP/MUS consistente</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Production Gate PASS</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checklist-phase" data-phase="4">
+        <h3>Fase 4 - Validação <span class="status">0/4</span></h3>
+        <div class="checklist-items">
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>/review-all executado</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>STAND Score ≥85%</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Stress-test /copy-critic passed</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Humano aprovou - PRONTO!</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Copy Chief Ecosystem v5.3 • Built with Claude Code</p>
+      <p><a href="https://github.com/anthropics/claude-code">Claude Code</a> • <a href="https://anthropic.com">Anthropic</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Interactive Checklist Logic
+    document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        const item = this.closest('.checklist-item');
+        const phase = this.closest('.checklist-phase');
+
+        // Toggle checked class
+        item.classList.toggle('checked', this.checked);
+
+        // Update phase status
+        const total = phase.querySelectorAll('input').length;
+        const checked = phase.querySelectorAll('input:checked').length;
+        const status = phase.querySelector('.status');
+
+        status.textContent = `${checked}/${total}`;
+        status.classList.toggle('complete', checked === total);
+
+        // Save to localStorage
+        saveProgress();
+      });
+    });
+
+    // Save/Load Progress
+    function saveProgress() {
+      const state = {};
+      document.querySelectorAll('.checklist-phase').forEach(phase => {
+        const phaseId = phase.dataset.phase;
+        state[phaseId] = [];
+        phase.querySelectorAll('input').forEach((input, idx) => {
+          state[phaseId][idx] = input.checked;
+        });
+      });
+      localStorage.setItem('copy-chief-checklist', JSON.stringify(state));
+    }
+
+    function loadProgress() {
+      const saved = localStorage.getItem('copy-chief-checklist');
+      if (!saved) return;
+
+      const state = JSON.parse(saved);
+      Object.entries(state).forEach(([phaseId, items]) => {
+        const phase = document.querySelector(`[data-phase="${phaseId}"]`);
+        if (!phase) return;
+
+        phase.querySelectorAll('input').forEach((input, idx) => {
+          if (items[idx]) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change'));
+          }
+        });
+      });
+    }
+
+    // Load on page load
+    loadProgress();
+  </script>
+
+</body>
+</html>
