@@ -164,6 +164,7 @@
         <a href="#fundamentos">Fundamentos</a>
         <a href="#anatomia">Anatomia</a>
         <a href="#skills">Skills</a>
+        <a href="#mcp">MCP Plugin</a>
         <a href="#worktrees">Worktrees</a>
         <a href="#workflow">Workflow</a>
         <a href="#decisoes">Decisoes</a>
@@ -178,10 +179,11 @@
       <h1>Tutorial Definitivo</h1>
       <p class="subtitle">De orquestrador a Copy Chief - 100% do potencial do ecossistema</p>
       <div>
-        <span class="badge success">v5.3</span>
+        <span class="badge success">v5.5</span>
         <span class="badge primary">8 Skills</span>
         <span class="badge">9 Comandos</span>
-        <span class="badge">19 Hooks</span>
+        <span class="badge">22 Hooks</span>
+        <span class="badge" style="background: rgba(139,92,246,0.2); border-color: #8b5cf6;">7 MCP Tools</span>
       </div>
     </div>
   </section>
@@ -262,12 +264,14 @@ cd ~ && claude
 <span class="folder">~/.claude/</span>
 ├── <span class="file">CLAUDE.md</span>         <span class="note">← Instrucoes GLOBAIS (sempre carregado)</span>
 ├── <span class="file">settings.json</span>     <span class="note">← Hooks, model, env vars</span>
-├── <span class="file">mcp.json</span>          <span class="note">← MCP servers (Apify, Playwright, etc)</span>
-├── <span class="file">.version</span>          <span class="note">← v5.3 (single source of truth)</span>
+├── <span class="file">mcp.json</span>          <span class="note">← MCP servers (Apify, Playwright, copywriting, etc)</span>
+├── <span class="file">.version</span>          <span class="note">← v5.5 (single source of truth)</span>
 │
 ├── <span class="folder">skills/</span>           <span class="note">← 8 agents especializados (SKILL.md cada)</span>
 ├── <span class="folder">commands/</span>         <span class="note">← 9 slash commands (/.md cada)</span>
 ├── <span class="folder">hooks/</span>            <span class="note">← 19 hooks de automacao (.ts/.sh)</span>
+├── <span class="folder">plugins/</span>          <span class="note">← MCP plugins (copywriting-mcp)</span>
+│   └── <span class="folder">copywriting-mcp/</span>  <span class="note">← 7 tools + SQLite + 3 hooks</span>
 ├── <span class="folder">templates/</span>        <span class="note">← Templates de pesquisa (ads-library, VOC, trends)</span>
 ├── <span class="folder">rules/</span>            <span class="note">← 5 regras path-specific</span>
 └── <span class="folder">references/</span>       <span class="note">← Copy fundamentals (psicologia, estrutura, erros)</span>
@@ -443,6 +447,130 @@ cd ~ && claude
     </div>
   </section>
 
+  <!-- PARTE 3.5: MCP PLUGIN -->
+  <section id="mcp">
+    <div class="container">
+      <h2 class="section-title"><span class="section-number" style="background: #8b5cf6;">+</span> Plugin MCP: copywriting-mcp</h2>
+      <p style="margin-bottom:1rem"><strong>NOVO em v5.5:</strong> Plugin MCP especializado para copywriting com database SQLite local e validacao automatica.</p>
+
+      <div class="card highlight">
+        <h3>O que e o copywriting-mcp?</h3>
+        <p>Um servidor MCP (Model Context Protocol) que adiciona <strong>7 ferramentas especializadas</strong> para copywriting, com persistencia local em SQLite.</p>
+        <p style="margin-top:0.5rem"><strong>Diferenca Skills vs MCP Tools:</strong></p>
+        <ul>
+          <li><strong>Skills:</strong> Orquestram workflows completos (pesquisa → briefing → producao)</li>
+          <li><strong>MCP Tools:</strong> Operacoes atomicas rapidas (buscar VOC, validar gate, revisar copy)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>7 Tools Disponiveis</h3>
+        <table>
+          <tr><th>Tool</th><th>Funcao</th><th>Exemplo de Uso</th></tr>
+          <tr>
+            <td><code>voc_search</code></td>
+            <td>Busca VOC por emocao/keyword/intensidade</td>
+            <td>voc_search emotion="frustracao" nicho="concursos"</td>
+          </tr>
+          <tr>
+            <td><code>get_phase_context</code></td>
+            <td>Carrega contexto da fase HELIX</td>
+            <td>get_phase_context phase=5 offer_path="concursos/hacker"</td>
+          </tr>
+          <tr>
+            <td><code>validate_gate</code></td>
+            <td>Valida gates (research/briefing/production)</td>
+            <td>validate_gate gate_type="research" offer_path="..."</td>
+          </tr>
+          <tr>
+            <td><code>blind_critic</code></td>
+            <td>Avaliacao cega (sem contexto de geracao)</td>
+            <td>blind_critic copy="[texto]" copy_type="hook"</td>
+          </tr>
+          <tr>
+            <td><code>emotional_stress_test</code></td>
+            <td>4 testes: Genericidade, Visceral, Scroll-Stop, Prova Social</td>
+            <td>emotional_stress_test copy="[texto]"</td>
+          </tr>
+          <tr>
+            <td><code>write_chapter</code></td>
+            <td>Escrita por capitulos (metodologia H&W)</td>
+            <td>write_chapter chapter=1 offer_path="..."</td>
+          </tr>
+          <tr>
+            <td><code>layered_review</code></td>
+            <td>Revisao em 3 camadas</td>
+            <td>layered_review copy="[texto]" layer=1</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card success">
+        <h3>O que o Plugin SUBSTITUI</h3>
+        <p>Estes scripts Python agora sao <strong>opcionais</strong> (MCP tools sao mais integrados):</p>
+        <ul>
+          <li><code>scripts/validate-gate.py</code> → Substituido por <code>validate_gate</code> tool</li>
+          <li><code>scripts/validate-research.sh</code> → Substituido por <code>validate_gate</code> tool</li>
+        </ul>
+        <p style="margin-top:0.5rem"><strong>Vantagem:</strong> Validacao agora acontece automaticamente via hooks, nao precisa rodar scripts manualmente.</p>
+      </div>
+
+      <div class="card">
+        <h3>O que o Plugin COMPLEMENTA (nao substitui)</h3>
+        <table>
+          <tr><th>Existente</th><th>Plugin Tool</th><th>Relacao</th></tr>
+          <tr><td>copy-critic skill</td><td>blind_critic + emotional_stress_test</td><td>Plugin = API rapida, Skill = workflow completo</td></tr>
+          <tr><td>voc-research-agent</td><td>voc_search</td><td>Agent EXTRAI, Tool BUSCA no DB</td></tr>
+          <tr><td>helix-system-agent</td><td>get_phase_context</td><td>Agent PREENCHE, Tool CARREGA contexto</td></tr>
+          <tr><td>production-agent</td><td>write_chapter + layered_review</td><td>Agent ORQUESTRA, Tools = helpers</td></tr>
+        </table>
+      </div>
+
+      <div class="card warning">
+        <h3>3 Hooks do Plugin</h3>
+        <table>
+          <tr><th>Hook</th><th>Trigger</th><th>Funcao</th></tr>
+          <tr><td><code>session-start.ts</code></td><td>Inicio de sessao</td><td>Context injection automatico da oferta ativa</td></tr>
+          <tr><td><code>pre-compact.ts</code></td><td>Antes de /compact</td><td>Salva estado no SQLite (recovery garantido)</td></tr>
+          <tr><td><code>pre-tool-use.ts</code></td><td>Antes de Write em production/</td><td>Gate enforcement automatico</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Database SQLite Local</h3>
+        <p>O plugin usa SQLite para persistencia local (100% offline, zero custo):</p>
+        <div class="tree">
+<span class="folder">~/.claude/plugins/copywriting-mcp/</span>
+├── <span class="folder">data/</span>
+│   └── <span class="file">copywriting.db</span>     <span class="note">← SQLite database</span>
+├── <span class="folder">src/</span>
+│   ├── <span class="file">server.ts</span>           <span class="note">← MCP entry point</span>
+│   └── <span class="folder">tools/</span>              <span class="note">← 7 tools</span>
+├── <span class="folder">hooks/</span>                  <span class="note">← 3 hooks</span>
+└── <span class="folder">prompts/</span>                <span class="note">← Templates (puzzle-pieces, vsl-writer, etc)</span>
+        </div>
+        <p style="margin-top:0.5rem"><strong>Tabelas:</strong> voc_quotes, swipes, competitors, validations, helix_progress, session_state</p>
+      </div>
+
+      <div class="card highlight">
+        <h3>Quando usar MCP Tools vs Skills?</h3>
+        <div class="decision-tree">
+<span class="q">Preciso de workflow COMPLETO (pesquisa → producao)?</span>
+  <span class="yes">SIM →</span> Usar SKILL (ex: /helix-system-agent)
+  <span class="no">NAO →</span> Continue...
+
+<span class="q">Preciso de operacao RAPIDA e especifica?</span>
+  <span class="yes">SIM →</span> Usar MCP TOOL (ex: voc_search, validate_gate)
+  <span class="no">NAO →</span> Continue...
+
+<span class="q">Quero validar copy rapidamente?</span>
+  <span class="yes">SIM →</span> blind_critic ou emotional_stress_test
+  <span class="no">NAO →</span> Usar skill ou prompt natural
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PARTE 4: WORKTREES -->
   <section id="worktrees">
     <div class="container">
@@ -555,6 +683,10 @@ git checkout feature-x  <span class="comment">← Muda TODOS os arquivos do dire
         </ul>
         <p style="margin-top:0.5rem"><strong>Como saber se terminou:</strong></p>
         <div class="code-block">
+<span class="comment"># MCP Tool (v5.5+ - automatico)</span>
+<span class="highlight">validate_gate gate_type="research" offer_path="concursos/hacker"</span>
+
+<span class="comment"># ou Script Python (legado)</span>
 python3 scripts/validate-gate.py RESEARCH concursos/hacker
 <span class="comment"># PASSED → Avancar  |  BLOCKED → Lista o que falta</span>
         </div>
@@ -745,7 +877,12 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
       <div class="card danger">
         <h3>"Gate bloqueado"</h3>
         <div class="code-block">
+<span class="comment"># Opcao 1: MCP Tool (RECOMENDADO - v5.5+)</span>
+<span class="highlight">validate_gate gate_type="research" offer_path="concursos/hacker"</span>
+
+<span class="comment"># Opcao 2: Script Python (legado)</span>
 python3 scripts/validate-gate.py RESEARCH concursos/hacker
+
 <span class="comment"># Output mostra EXATAMENTE o que falta</span>
 <span class="comment"># Exemplo: "MISSING: voc/trends-analysis.md"</span>
 <span class="comment"># Acao: "complete o trends-analysis para hacker"</span>
@@ -832,8 +969,8 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
 
   <footer class="footer">
     <div class="container">
-      <p>Copy Chief Ecosystem v5.3 - Tutorial Definitivo</p>
-      <p>Built with Claude Code</p>
+      <p>Copy Chief Ecosystem v5.5 - Tutorial Definitivo</p>
+      <p>Built with Claude Code + copywriting-mcp</p>
     </div>
   </footer>
 
