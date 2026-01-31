@@ -165,6 +165,7 @@
         <a href="#anatomia">Anatomia</a>
         <a href="#skills">Skills</a>
         <a href="#mcp">MCP Plugin</a>
+        <a href="#jarvis">Jarvis</a>
         <a href="#worktrees">Worktrees</a>
         <a href="#workflow">Workflow</a>
         <a href="#decisoes">Decisoes</a>
@@ -179,11 +180,12 @@
       <h1>Tutorial Definitivo</h1>
       <p class="subtitle">De orquestrador a Copy Chief - 100% do potencial do ecossistema</p>
       <div>
-        <span class="badge success">v5.6</span>
+        <span class="badge success">v6.0</span>
         <span class="badge primary">8 Skills</span>
         <span class="badge">9 Comandos</span>
-        <span class="badge">22 Hooks</span>
+        <span class="badge">24 Hooks</span>
         <span class="badge" style="background: rgba(139,92,246,0.2); border-color: #8b5cf6;">7 MCP Tools</span>
+        <span class="badge" style="background: rgba(239,68,68,0.2); border-color: #ef4444;">Nivel Jarvis</span>
       </div>
     </div>
   </section>
@@ -218,11 +220,17 @@
           <li><strong>Research Gate:</strong> synthesis.md + 4 summaries + confidence ≥70%</li>
           <li><strong>Briefing Gate:</strong> 10 fases HELIX + MUP/MUS STAND ≥80%</li>
           <li><strong>Production Gate:</strong> Secao GATE em todas copys + consistencia</li>
+          <li><strong>Gate #5 (v6.0):</strong> Production Gates - bloqueia escrita em <code>production/</code> sem research/briefing completos</li>
+          <li><strong>Gate #6 (v6.0):</strong> Anti-Homogeneizacao - detecta e rejeita copy generica automaticamente</li>
         </ul>
         <div class="code-block">
 <span class="comment"># Validar gate manualmente:</span>
 python3 scripts/validate-gate.py RESEARCH concursos/hacker
 <span class="comment"># PASSED = pode avancar | BLOCKED = lista o que falta</span>
+
+<span class="comment"># NOVO v6.0 - Gates sao enforced automaticamente via hooks</span>
+<span class="comment"># Se escrever em production/ sem research → BLOQUEIO</span>
+<span class="comment"># Escape: adicionar --force-production no prompt</span>
         </div>
       </div>
 
@@ -380,11 +388,16 @@ cd ~ && claude
           <p><strong>Triggers:</strong> "briefing VSL", "preencher HELIX", "MUP/MUS"</p>
           <p><strong>IMPORTANTE:</strong> Fases 5 (MUP) e 6 (MUS) requerem <strong>DECISAO HUMANA</strong></p>
           <p><strong>Checkpoint:</strong> copy-critic OBRIGATORIO no MUP e MUS antes de avancar</p>
-          <p><strong>NOVO v5.6:</strong></p>
+          <p><strong>Features v5.6+:</strong></p>
           <ul>
             <li>Usa framework <strong>First Principles</strong> (primeiros-principios-copy-chief.md) - consolidacao Khayat + Max Peters + Vitor Mound</li>
             <li><strong>Principio da Inversao de Crenca</strong> substituiu "4 Pilares Big Ideas"</li>
             <li>Referencias organizadas em <strong>5 niveis de prioridade</strong> (Biblias → Frameworks → Tecnicas → Nicho → Oferta)</li>
+          </ul>
+          <p><strong>NOVO v6.0:</strong></p>
+          <ul>
+            <li><strong>Gate Enforcement:</strong> Nao avanca sem research completo</li>
+            <li><strong>Anti-Homogeneizacao:</strong> MUP/MUS verificados contra cliches</li>
           </ul>
           <p><strong>Output:</strong> <code>briefings/phases/fase-01-10.md</code></p>
           <div class="code-block">/helix-system-agent
@@ -422,8 +435,17 @@ cd ~ && claude
           <p><strong>Faz:</strong> Orquestra producao com contexto isolado de 200K tokens</p>
           <p><strong>Triggers:</strong> "produzir copy", "criar VSL", "producao em lote"</p>
           <p><strong>Pre-flight:</strong> Valida se research foi feito (BLOQUEANTE)</p>
+          <p><strong>NOVO v6.0:</strong></p>
+          <ul>
+            <li><strong>Gate Enforcement:</strong> Nao inicia sem Research Gate + Briefing Gate passados</li>
+            <li><strong>Anti-Homogeneizacao:</strong> Verifica genericidade de cada output</li>
+            <li><strong>Genericidade Score:</strong> Minimo 8/10 para aprovar copy</li>
+            <li><strong>Cliches Check:</strong> Rejeita automaticamente palavras banidas</li>
+          </ul>
           <p><strong>Output:</strong> VSL + LP + Criativos + Emails (completo)</p>
-          <div class="code-block">/produce-offer concursos/hacker</div>
+          <div class="code-block">/produce-offer concursos/hacker
+<span class="comment"># v6.0: Bloqueado se research incompleto</span>
+<span class="comment"># v6.0: Warning se genericidade &lt; 8/10</span></div>
         </div>
       </div>
 
@@ -457,7 +479,7 @@ cd ~ && claude
   <section id="mcp">
     <div class="container">
       <h2 class="section-title"><span class="section-number" style="background: #8b5cf6;">+</span> Plugin MCP: copywriting-mcp</h2>
-      <p style="margin-bottom:1rem"><strong>NOVO em v5.5:</strong> Plugin MCP especializado para copywriting com database SQLite local e validacao automatica.</p>
+      <p style="margin-bottom:1rem"><strong>NOVO em v5.5, expandido em v6.0:</strong> Plugin MCP especializado para copywriting com database SQLite local, validacao automatica e integracao com Gate Enforcement.</p>
 
       <div class="card highlight">
         <h3>O que e o copywriting-mcp?</h3>
@@ -533,12 +555,14 @@ cd ~ && claude
       </div>
 
       <div class="card warning">
-        <h3>3 Hooks do Plugin</h3>
+        <h3>5 Hooks do Plugin (3 originais + 2 v6.0)</h3>
         <table>
           <tr><th>Hook</th><th>Trigger</th><th>Funcao</th></tr>
           <tr><td><code>session-start.ts</code></td><td>Inicio de sessao</td><td>Context injection automatico da oferta ativa</td></tr>
           <tr><td><code>pre-compact.ts</code></td><td>Antes de /compact</td><td>Salva estado no SQLite (recovery garantido)</td></tr>
           <tr><td><code>pre-tool-use.ts</code></td><td>Antes de Write em production/</td><td>Gate enforcement automatico</td></tr>
+          <tr><td><code>pre-tool-use-gate.ts</code></td><td>Antes de Edit/Write</td><td><strong>v6.0:</strong> Valida Research + Briefing Gates</td></tr>
+          <tr><td><code>post-tool-use.ts</code></td><td>Apos Write em production/</td><td><strong>v6.0:</strong> Anti-Homogeneizacao check</td></tr>
         </table>
       </div>
 
@@ -573,6 +597,102 @@ cd ~ && claude
   <span class="yes">SIM →</span> blind_critic ou emotional_stress_test
   <span class="no">NAO →</span> Usar skill ou prompt natural
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTE 3.6: NIVEL JARVIS -->
+  <section id="jarvis">
+    <div class="container">
+      <h2 class="section-title"><span class="section-number" style="background: #ef4444;">!</span> Nivel Jarvis - Gate Enforcement Automatico</h2>
+      <p style="margin-bottom:1rem"><strong>NOVO em v6.0:</strong> Sistema de enforcement automatico que garante qualidade sem intervencao manual.</p>
+
+      <div class="card highlight">
+        <h3>O que e o Nivel Jarvis?</h3>
+        <p>Sistema de <strong>enforcement automatico</strong> que:</p>
+        <ul>
+          <li>Bloqueia producao sem research/briefing completos</li>
+          <li>Detecta e rejeita copy generica automaticamente</li>
+          <li>Calcula Genericidade Score (minimo 8/10)</li>
+          <li>Impede cliches do nicho em qualquer copy</li>
+        </ul>
+        <p style="margin-top:0.5rem"><strong>Filosofia:</strong> O sistema NAO deixa voce errar. Antes de produzir copy, ele valida automaticamente se voce tem os pre-requisitos.</p>
+      </div>
+
+      <div class="card warning">
+        <h3>Gate #5: Production Gates</h3>
+        <p>Hook <code>pre-tool-use-gate.ts</code> bloqueia Write/Edit em <code>production/</code> se:</p>
+        <ul>
+          <li><strong>Research Gate nao passou:</strong> synthesis.md, VOC summary, competitors, mechanism, avatar</li>
+          <li><strong>Briefing Gate nao passou:</strong> 6+ fases HELIX, MUP/MUS definidos</li>
+        </ul>
+        <div class="code-block">
+<span class="comment"># Mensagem de bloqueio esperada:</span>
+BLOQUEADO - Research incompleto
+Missing: voc/summary.md, competitors/ads-library-spy.md
+
+<span class="comment"># Escape phrase (use com cautela):</span>
+<span class="highlight">"--force-production crie criativos para X"</span>
+        </div>
+      </div>
+
+      <div class="card danger">
+        <h3>Gate #6: Anti-Homogeneizacao</h3>
+        <p>Hook <code>post-tool-use.ts</code> verifica automaticamente ao escrever copy:</p>
+        <table>
+          <tr><th>Verificacao</th><th>Threshold</th><th>Acao se Falhar</th></tr>
+          <tr><td>Cliches do nicho</td><td>0 permitidos</td><td>Warning + lista substituicoes</td></tr>
+          <tr><td>Palavras banidas</td><td>0 permitidas</td><td>Warning + lista alternativas</td></tr>
+          <tr><td>Nome proprietario</td><td>Obrigatorio</td><td>Warning se metodo generico</td></tr>
+          <tr><td>Genericidade Score</td><td>≥ 8/10</td><td>Warning "concorrente poderia usar"</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Cliches Proibidos por Nicho</h3>
+        <p><strong>CONCURSOS:</strong></p>
+        <ul>
+          <li><code>"metodo infalivel"</code> → Use nome proprietario do metodo</li>
+          <li><code>"passe em menos tempo"</code> → Use prazo especifico + contexto</li>
+          <li><code>"decoreba nao funciona"</code> → Descreva problema especifico</li>
+          <li><code>"estudar de forma inteligente"</code> → Nomeie a tecnica</li>
+        </ul>
+        <p style="margin-top:0.5rem"><strong>Palavras Banidas (todos nichos):</strong></p>
+        <div class="code-block">
+revolucionario, inovador, incrivel, inacreditavel,
+transformacao, jornada, desbloquear, empoderar,
+segredo (sem especificacao), metodo (sem nome proprio)
+        </div>
+      </div>
+
+      <div class="card success">
+        <h3>Genericidade Score</h3>
+        <p>Avaliacao automatica de 1-10:</p>
+        <table>
+          <tr><th>Score</th><th>Significado</th><th>Acao</th></tr>
+          <tr><td>1-3</td><td>Qualquer concorrente usaria sem alteracao</td><td>REFAZER</td></tr>
+          <tr><td>4-5</td><td>Precisa adaptacao moderada</td><td>REVISAR</td></tr>
+          <tr><td>6-7</td><td>Relativamente unica</td><td>OK</td></tr>
+          <tr><td>8-10</td><td>Impossivel confundir com outro</td><td>APROVADO</td></tr>
+        </table>
+        <p style="margin-top:0.5rem"><strong>Threshold v6.0:</strong> Score &lt; 8 = Warning automatico</p>
+      </div>
+
+      <div class="card highlight">
+        <h3>Logo Test e Competitor Swap Test</h3>
+        <p><strong>Logo Test:</strong> "Se trocar o logo para o concorrente, ainda funciona?"</p>
+        <ul>
+          <li>Funciona sem alteracao → <strong>REFAZER</strong></li>
+          <li>Precisa alterar 20%+ → REVISAR</li>
+          <li>Claramente identificavel → APROVADO</li>
+        </ul>
+        <p style="margin-top:0.5rem"><strong>Competitor Swap Test:</strong> "Um concorrente poderia roubar esta copy?"</p>
+        <ul>
+          <li>Mecanismo e PROPRIETARIO?</li>
+          <li>Nome do produto/metodo aparece?</li>
+          <li>Ha elementos UNICOS da oferta?</li>
+          <li>Prova social e ESPECIFICA (nomes, numeros)?</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -734,6 +854,15 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
         <h3>FASE 3: Producao (30-60 min - Sistema)</h3>
         <div class="code-block">
 /produce-offer concursos/hacker
+        </div>
+        <p><strong>NOVO v6.0 - Bloqueio Automatico:</strong></p>
+        <div class="code-block">
+<span class="comment"># Se tentar produzir sem research completo:</span>
+BLOQUEADO - Research Gate nao passou
+Missing: synthesis.md, voc/summary.md
+
+<span class="comment"># Escape (use com cautela):</span>
+<span class="highlight">"--force-production /produce-offer concursos/hacker"</span>
         </div>
         <p><strong>Produz automaticamente:</strong> VSL + LP (14 blocos) + 7 Criativos + 5 Emails</p>
         <p><strong>OBRIGATORIO em cada copy - Secao GATE:</strong></p>
@@ -918,6 +1047,56 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
           <li>Repetir instrucao de forma mais explicita</li>
         </ul>
       </div>
+
+      <div class="card danger">
+        <h3>"Gate bloqueou producao" (NOVO v6.0)</h3>
+        <div class="code-block">
+<span class="comment"># Mensagem tipica:</span>
+BLOQUEADO - Research Gate nao passou
+Missing: synthesis.md, voc/summary.md, ads-library-spy.md
+
+<span class="comment"># Solucao 1: Completar research</span>
+"complete o research para concursos/hacker"
+/squad-research concursos/hacker
+
+<span class="comment"># Solucao 2: Escape (use com cautela)</span>
+<span class="highlight">"--force-production crie criativos para X"</span>
+        </div>
+      </div>
+
+      <div class="card danger">
+        <h3>"Genericidade Score baixo" (NOVO v6.0)</h3>
+        <div class="code-block">
+<span class="comment"># Warning tipico:</span>
+WARNING: Genericidade Score 5/10
+Concorrente poderia usar sem alteracao
+
+<span class="comment"># Solucao:</span>
+1. Adicionar nome PROPRIETARIO para o metodo
+2. Incluir numeros ESPECIFICOS (nao arredondados)
+3. Usar linguagem da VOC (nao generica)
+4. Adicionar prova social ESPECIFICA (nomes, datas)
+
+<span class="comment"># Pedir refacao:</span>
+"refaca com mais especificidade - adicione nome do metodo e numeros"
+        </div>
+      </div>
+
+      <div class="card danger">
+        <h3>"Cliches detectados" (NOVO v6.0)</h3>
+        <div class="code-block">
+<span class="comment"># Warning tipico:</span>
+WARNING: Cliche detectado: "metodo infalivel"
+Substituir por: nome proprietario do metodo
+
+<span class="comment"># Solucao:</span>
+"substitua 'metodo infalivel' por 'Sistema HELIX'"
+"refaca sem usar palavras banidas"
+
+<span class="comment"># Ver lista completa:</span>
+~/.claude/rules/anti-homogeneization.md
+        </div>
+      </div>
     </div>
   </section>
 
@@ -975,8 +1154,8 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
 
   <footer class="footer">
     <div class="container">
-      <p>Copy Chief Ecosystem v5.6 - Tutorial Definitivo</p>
-      <p>Built with Claude Code + copywriting-mcp</p>
+      <p>Copy Chief Ecosystem v6.0 - Tutorial Definitivo (Nivel Jarvis)</p>
+      <p>Built with Claude Code + copywriting-mcp + Gate Enforcement</p>
     </div>
   </footer>
 
@@ -1007,11 +1186,11 @@ python3 scripts/validate-gate.py RESEARCH concursos/hacker
         s[sec.dataset.phase] = [];
         sec.querySelectorAll('input').forEach((i, idx) => { s[sec.dataset.phase][idx] = i.checked; });
       });
-      localStorage.setItem('tutorial-v2', JSON.stringify(s));
+      localStorage.setItem('tutorial-v6', JSON.stringify(s));
     }
 
     function loadProgress() {
-      const saved = localStorage.getItem('tutorial-v2');
+      const saved = localStorage.getItem('tutorial-v6');
       if (!saved) return;
       const s = JSON.parse(saved);
       Object.entries(s).forEach(([p, items]) => {
