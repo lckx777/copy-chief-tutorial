@@ -3,403 +3,1567 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Copy Chief Ecosystem - Tutorial Definitivo</title>
+  <title>Copy Chief Ecosystem - Tutorial Jarvis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ============================================
+       JARVIS THEME - Copy Chief Ecosystem v6.0
+       ============================================ */
+
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --info: #3b82f6;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
+      /* Arc Reactor - Primary */
+      --arc-blue: #00D4FF;
+      --arc-cyan: #00B4D8;
+      --arc-glow: rgba(0, 212, 255, 0.3);
+
+      /* Accent Colors */
+      --iron-red: #C41E3A;
+      --gold: #FFD700;
+      --hud-orange: #FF6B35;
+
+      /* Dark Mode Backgrounds */
+      --deep-space: #0A0E17;
+      --midnight: #0D1321;
+      --tech-gray: #1A2332;
+      --steel-gray: #2D3A4F;
+
+      /* Text Colors */
+      --text-primary: #E8ECF4;
+      --text-secondary: #8B9AB3;
+      --text-muted: #5A6A7F;
+
+      /* Status Colors */
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+
+      /* Border Radius */
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+
+      /* Transitions */
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+      --transition-slow: 400ms ease;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.7;
-      color: var(--gray-800);
-      background: var(--gray-50);
+      color: var(--text-primary);
+      background: var(--deep-space);
+      min-height: 100vh;
     }
-    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+
+    @keyframes arc-pulse {
+      0%, 100% {
+        box-shadow: 0 0 5px var(--arc-glow), 0 0 20px var(--arc-glow);
+        opacity: 1;
+      }
+      50% {
+        box-shadow: 0 0 10px var(--arc-glow), 0 0 40px var(--arc-glow);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes hud-scan {
+      0% { transform: translateY(-100%); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+
+    @keyframes glow-text {
+      0%, 100% { text-shadow: 0 0 10px var(--arc-glow); }
+      50% { text-shadow: 0 0 20px var(--arc-glow), 0 0 30px var(--arc-glow); }
+    }
+
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes progress-fill {
+      from { width: 0; }
+    }
+
+    @keyframes check-complete {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes tooltip-fade {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+
     .nav {
-      position: sticky; top: 0; background: var(--gray-900);
-      padding: 0.75rem 0; z-index: 100; border-bottom: 3px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 19, 33, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--steel-gray);
     }
+
     .nav-content {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) 0;
+      gap: var(--space-md);
     }
-    .nav-title { color: white; font-size: 1.125rem; font-weight: 700; }
-    .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--arc-blue), var(--arc-cyan));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: arc-pulse 3s infinite;
+    }
+
+    .nav-logo svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--deep-space);
+    }
+
+    .nav-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .nav-title span {
+      color: var(--arc-blue);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+
     .nav-links a {
-      color: var(--gray-300); text-decoration: none; padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem; font-size: 0.8rem; transition: all 0.2s;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
     }
-    .nav-links a:hover { background: var(--primary); color: white; }
+
+    .nav-links a:hover {
+      color: var(--arc-blue);
+      background: rgba(0, 212, 255, 0.1);
+    }
+
+    .nav-links a.active {
+      color: var(--arc-blue);
+      background: rgba(0, 212, 255, 0.15);
+    }
+
+    /* Mobile Menu */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      padding: var(--space-sm);
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--midnight);
+        padding: var(--space-md);
+        border-bottom: 1px solid var(--steel-gray);
+        flex-direction: column;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+    }
+
+    /* Progress Bar */
+    .nav-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--arc-blue), var(--arc-cyan));
+      transition: width var(--transition-normal);
+      box-shadow: 0 0 10px var(--arc-glow);
+    }
+
+    /* ============================================
+       HERO - QUICK START
+       ============================================ */
+
     .hero {
-      background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
-      color: white; padding: 3rem 0; text-align: center;
+      position: relative;
+      background: linear-gradient(180deg, var(--midnight) 0%, var(--deep-space) 100%);
+      padding: var(--space-2xl) 0;
+      overflow: hidden;
     }
-    .hero h1 { font-size: 2.25rem; margin-bottom: 0.75rem; }
-    .hero .subtitle { font-size: 1.125rem; opacity: 0.9; margin-bottom: 1.5rem; }
-    .badge {
-      display: inline-block; background: rgba(255,255,255,0.1);
-      padding: 0.375rem 0.875rem; border-radius: 2rem; font-size: 0.8rem;
-      border: 1px solid rgba(255,255,255,0.2); margin: 0.25rem;
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--arc-blue), transparent);
     }
-    .badge.success { background: rgba(16,185,129,0.2); border-color: var(--success); }
-    .badge.primary { background: rgba(99,102,241,0.2); border-color: var(--primary); }
-    section { padding: 3rem 0; }
-    section:nth-child(even) { background: white; }
+
+    /* HUD Scan Effect */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(180deg, var(--arc-glow), transparent);
+      animation: hud-scan 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid var(--arc-blue);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--arc-blue);
+      margin-bottom: var(--space-lg);
+      animation: arc-pulse 4s infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: var(--space-sm);
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--arc-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+    }
+
+    .hero-subtitle strong {
+      color: var(--arc-blue);
+    }
+
+    /* Quick Start Box */
+    .quick-start {
+      background: var(--midnight);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .quick-start-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .quick-start-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .quick-start-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--arc-blue);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quick-start-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--deep-space);
+    }
+
+    /* Terminal Mockup */
+    .terminal {
+      background: var(--deep-space);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .terminal-header {
+      background: var(--tech-gray);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: #FF5F56; }
+    .terminal-dot.yellow { background: #FFBD2E; }
+    .terminal-dot.green { background: #27C93F; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-body {
+      padding: var(--space-md);
+      font-size: 0.875rem;
+      line-height: 1.8;
+    }
+
+    .terminal-line {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--space-sm);
+    }
+
+    .terminal-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .terminal-prompt {
+      color: var(--arc-cyan);
+      margin-right: var(--space-sm);
+      user-select: none;
+    }
+
+    .terminal-command {
+      color: var(--success);
+    }
+
+    .terminal-comment {
+      color: var(--text-muted);
+      margin-left: var(--space-lg);
+    }
+
+    .terminal-number {
+      color: var(--gold);
+      margin-right: var(--space-sm);
+      user-select: none;
+      min-width: 1.5ch;
+    }
+
+    /* Hero Stats */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+    }
+
+    .stat-badge .value {
+      color: var(--arc-blue);
+      font-weight: 600;
+    }
+
+    .stat-badge .label {
+      color: var(--text-secondary);
+    }
+
+    .stat-badge.gold { border-color: var(--gold); }
+    .stat-badge.gold .value { color: var(--gold); }
+
+    .stat-badge.red { border-color: var(--iron-red); }
+    .stat-badge.red .value { color: var(--iron-red); }
+
+    /* ============================================
+       SECTIONS
+       ============================================ */
+
+    section {
+      padding: var(--space-2xl) 0;
+      animation: slide-up 0.6s ease-out;
+    }
+
+    section:nth-child(even) {
+      background: var(--midnight);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
     .section-number {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: var(--primary); color: white; width: 2.25rem; height: 2.25rem;
-      border-radius: 50%; font-weight: 700; font-size: 1rem; margin-right: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--arc-blue), var(--arc-cyan));
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--deep-space);
       flex-shrink: 0;
     }
+
+    .section-number.gold {
+      background: linear-gradient(135deg, var(--gold), var(--hud-orange));
+    }
+
+    .section-number.red {
+      background: linear-gradient(135deg, var(--iron-red), #E53E3E);
+    }
+
     .section-title {
-      font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--gray-900);
-      display: flex; align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
     }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       CARDS
+       ============================================ */
+
     .card {
-      background: white; border: 1px solid var(--gray-200); border-radius: 0.75rem;
-      padding: 1.5rem; margin-bottom: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      background: var(--tech-gray);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      transition: all var(--transition-normal);
     }
-    .card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--gray-900); }
-    .card.highlight { border-left: 4px solid var(--primary); background: linear-gradient(to right, rgba(99,102,241,0.04), transparent); }
-    .card.warning { border-left: 4px solid var(--warning); background: linear-gradient(to right, rgba(245,158,11,0.04), transparent); }
-    .card.success { border-left: 4px solid var(--success); background: linear-gradient(to right, rgba(16,185,129,0.04), transparent); }
-    .card.danger { border-left: 4px solid var(--danger); background: linear-gradient(to right, rgba(239,68,68,0.04), transparent); }
+
+    .card:hover {
+      border-color: var(--arc-blue);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .card.highlight {
+      border-left: 3px solid var(--arc-blue);
+      background: linear-gradient(90deg, rgba(0, 212, 255, 0.05), transparent);
+    }
+
+    .card.warning {
+      border-left: 3px solid var(--warning);
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.05), transparent);
+    }
+
+    .card.success {
+      border-left: 3px solid var(--success);
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.05), transparent);
+    }
+
+    .card.danger {
+      border-left: 3px solid var(--danger);
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.05), transparent);
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+    }
+
+    /* ============================================
+       WORKFLOW CARDS (Visual)
+       ============================================ */
+
+    .workflow-cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-md);
+      margin: var(--space-xl) 0;
+    }
+
+    @media (max-width: 900px) {
+      .workflow-cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .workflow-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .workflow-card {
+      background: var(--tech-gray);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      text-align: center;
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+
+    .workflow-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      width: 20px;
+      height: 2px;
+      background: var(--steel-gray);
+    }
+
+    .workflow-card:last-child::after {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .workflow-card:nth-child(3)::after,
+      .workflow-card:nth-child(5)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .workflow-card::after {
+        top: auto;
+        bottom: -18px;
+        right: 50%;
+        width: 2px;
+        height: 20px;
+      }
+    }
+
+    .workflow-card:hover {
+      border-color: var(--arc-blue);
+      transform: translateY(-2px);
+    }
+
+    .workflow-card .phase-num {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--arc-blue), var(--arc-cyan));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--deep-space);
+      margin: 0 auto var(--space-sm);
+    }
+
+    .workflow-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .workflow-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .workflow-card .time {
+      font-size: 0.7rem;
+      color: var(--arc-cyan);
+      margin-top: var(--space-sm);
+    }
+
+    /* ============================================
+       CODE BLOCKS
+       ============================================ */
+
     .code-block {
-      background: var(--gray-900); color: #10b981; padding: 1rem 1.25rem;
-      border-radius: 0.5rem; font-family: 'Monaco','Menlo',monospace;
-      font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0; line-height: 1.6;
+      background: var(--deep-space);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin: var(--space-md) 0;
     }
-    .code-block .comment { color: #6b7280; }
-    .code-block .highlight { color: #f59e0b; }
+
+    .code-block .comment {
+      color: var(--text-muted);
+    }
+
+    .code-block .highlight {
+      color: var(--gold);
+    }
+
+    .code-block .command {
+      color: var(--success);
+    }
+
+    .code-block .prompt {
+      color: var(--arc-cyan);
+    }
+
     code {
-      background: var(--gray-100); padding: 0.125rem 0.375rem; border-radius: 0.25rem;
-      font-family: monospace; font-size: 0.85rem;
+      background: var(--tech-gray);
+      padding: 0.125rem 0.375rem;
+      border-radius: var(--radius-sm);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--arc-blue);
     }
-    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.875rem; }
-    th, td { padding: 0.625rem; text-align: left; border-bottom: 1px solid var(--gray-200); }
-    th { background: var(--gray-100); font-weight: 600; color: var(--gray-700); }
+
+    /* ============================================
+       TABLES
+       ============================================ */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      font-size: 0.875rem;
+    }
+
+    th, td {
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid var(--steel-gray);
+    }
+
+    th {
+      background: var(--tech-gray);
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      color: var(--text-secondary);
+    }
+
+    tr:hover td {
+      background: rgba(0, 212, 255, 0.02);
+    }
+
+    /* ============================================
+       TREE VIEW
+       ============================================ */
+
     .tree {
-      background: var(--gray-900); color: var(--gray-300); padding: 1.25rem;
-      border-radius: 0.5rem; font-family: monospace; font-size: 0.8rem;
-      line-height: 1.7; overflow-x: auto;
+      background: var(--deep-space);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      overflow-x: auto;
     }
-    .tree .folder { color: #60a5fa; }
-    .tree .file { color: #a3e635; }
-    .tree .note { color: #6b7280; font-style: italic; }
+
+    .tree .folder { color: var(--arc-blue); }
+    .tree .file { color: var(--success); }
+    .tree .note { color: var(--text-muted); font-style: italic; }
+
+    /* ============================================
+       DECISION TREE
+       ============================================ */
+
     .decision-tree {
-      background: var(--gray-100); padding: 1.25rem; border-radius: 0.5rem;
-      font-family: monospace; font-size: 0.875rem; line-height: 2;
+      background: var(--tech-gray);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 2;
     }
-    .decision-tree .q { color: var(--primary); font-weight: 600; }
+
+    .decision-tree .q {
+      color: var(--arc-blue);
+      font-weight: 600;
+    }
+
     .decision-tree .yes { color: var(--success); }
     .decision-tree .no { color: var(--danger); }
-    .accordion { margin-bottom: 0.75rem; }
+
+    /* ============================================
+       ACCORDION
+       ============================================ */
+
+    .accordion {
+      margin-bottom: var(--space-sm);
+    }
+
     .accordion-header {
-      background: var(--gray-100); padding: 0.875rem 1.25rem; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      border-radius: 0.5rem; font-weight: 600; font-size: 0.95rem;
+      background: var(--tech-gray);
+      border: 1px solid var(--steel-gray);
+      padding: var(--space-md) var(--space-lg);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
     }
-    .accordion-header:hover { background: var(--gray-200); }
+
+    .accordion-header:hover {
+      border-color: var(--arc-blue);
+      background: var(--steel-gray);
+    }
+
+    .accordion-header .icon {
+      color: var(--arc-blue);
+      font-size: 1.25rem;
+      font-weight: 400;
+      transition: transform var(--transition-fast);
+    }
+
+    .accordion.open .accordion-header {
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      border-color: var(--arc-blue);
+    }
+
+    .accordion.open .accordion-header .icon {
+      transform: rotate(45deg);
+    }
+
     .accordion-content {
-      display: none; padding: 1.25rem; background: white;
-      border: 1px solid var(--gray-200); border-top: none;
-      border-radius: 0 0 0.5rem 0.5rem;
+      display: none;
+      padding: var(--space-lg);
+      background: var(--midnight);
+      border: 1px solid var(--arc-blue);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      animation: slide-up 0.3s ease-out;
     }
-    .accordion.open .accordion-content { display: block; }
-    .accordion.open .accordion-header { border-radius: 0.5rem 0.5rem 0 0; }
-    ul { margin: 0.5rem 0; padding-left: 1.5rem; }
-    li { margin-bottom: 0.25rem; }
-    .checklist-section { margin-bottom: 1.5rem; }
-    .checklist-section h3 {
-      display: flex; align-items: center; gap: 0.75rem;
-      margin-bottom: 0.75rem; font-size: 1rem;
+
+    .accordion.open .accordion-content {
+      display: block;
     }
-    .checklist-section .status {
-      font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 1rem;
-      background: var(--gray-200); color: var(--gray-600);
+
+    .accordion-content p {
+      margin-bottom: var(--space-sm);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
-    .checklist-section .status.complete { background: var(--success); color: white; }
+
+    .accordion-content strong {
+      color: var(--text-primary);
+    }
+
+    /* ============================================
+       TOOLTIP
+       ============================================ */
+
+    .tooltip-trigger {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      cursor: help;
+      border-bottom: 1px dashed var(--arc-blue);
+    }
+
+    .tooltip-trigger::after {
+      content: '?';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      background: var(--arc-blue);
+      border-radius: 50%;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--deep-space);
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tech-gray);
+      border: 1px solid var(--arc-blue);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      z-index: 100;
+      animation: tooltip-fade 0.2s ease-out;
+    }
+
+    .tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--arc-blue);
+    }
+
+    .tooltip-trigger:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ============================================
+       CHECKLIST
+       ============================================ */
+
+    .checklist-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .checklist-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+    }
+
+    .checklist-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .checklist-status {
+      font-size: 0.75rem;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: 2rem;
+      background: var(--steel-gray);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .checklist-status.complete {
+      background: var(--success);
+      color: var(--deep-space);
+      animation: check-complete 0.3s ease;
+    }
+
     .checklist-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.625rem 0.875rem; background: var(--gray-50);
-      border-radius: 0.375rem; margin-bottom: 0.375rem; cursor: pointer;
-      transition: all 0.15s; font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--tech-gray);
+      border: 1px solid var(--steel-gray);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-xs);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: 0.9rem;
     }
-    .checklist-item:hover { background: var(--gray-100); }
-    .checklist-item input { width: 1.125rem; height: 1.125rem; }
-    .checklist-item.checked { background: rgba(16,185,129,0.08); }
-    .checklist-item.checked label { text-decoration: line-through; color: var(--gray-500); }
-    .footer {
-      padding: 1.5rem 0; text-align: center; color: var(--gray-600);
-      font-size: 0.8rem; border-top: 1px solid var(--gray-200);
+
+    .checklist-item:hover {
+      border-color: var(--arc-blue);
     }
+
+    .checklist-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--arc-blue);
+      cursor: pointer;
+    }
+
+    .checklist-item label {
+      flex: 1;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    .checklist-item.checked {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--success);
+    }
+
+    .checklist-item.checked label {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       PROGRESS TRACKER (Bottom)
+       ============================================ */
+
+    .progress-tracker {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13, 19, 33, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--steel-gray);
+      padding: var(--space-sm) var(--space-md);
+      z-index: 1000;
+      display: none;
+    }
+
     @media (max-width: 768px) {
-      .hero h1 { font-size: 1.5rem; }
-      .nav-links { display: none; }
-      table { font-size: 0.8rem; }
-      th, td { padding: 0.375rem; }
+      .progress-tracker {
+        display: block;
+      }
+    }
+
+    .progress-tracker-content {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--steel-gray);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--arc-blue), var(--arc-cyan));
+      border-radius: 2px;
+      transition: width var(--transition-normal);
+      box-shadow: 0 0 10px var(--arc-glow);
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    /* ============================================
+       LISTS
+       ============================================ */
+
+    ul {
+      margin: var(--space-sm) 0;
+      padding-left: var(--space-lg);
+    }
+
+    li {
+      margin-bottom: var(--space-xs);
+      color: var(--text-secondary);
+    }
+
+    li strong {
+      color: var(--text-primary);
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+
+    .footer {
+      background: var(--midnight);
+      border-top: 1px solid var(--steel-gray);
+      padding: var(--space-xl) 0;
+      text-align: center;
+    }
+
+    .footer p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .footer p:first-child {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xs);
+    }
+
+    .footer .arc {
+      color: var(--arc-blue);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .quick-start {
+        padding: var(--space-lg);
+      }
+
+      .terminal-body {
+        font-size: 0.8rem;
+      }
+
+      .hero-stats {
+        gap: var(--space-sm);
+      }
+
+      .stat-badge {
+        font-size: 0.7rem;
+        padding: var(--space-xs) var(--space-sm);
+      }
+
+      table {
+        font-size: 0.8rem;
+      }
+
+      th, td {
+        padding: var(--space-xs) var(--space-sm);
+      }
+
+      body {
+        padding-bottom: 60px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAVIGATION -->
   <nav class="nav">
     <div class="container nav-content">
-      <span class="nav-title">Copy Chief Ecosystem</span>
-      <div class="nav-links">
-        <a href="#fundamentos">Fundamentos</a>
-        <a href="#anatomia">Anatomia</a>
-        <a href="#skills">Skills</a>
-        <a href="#mcp">MCP Plugin</a>
-        <a href="#jarvis">Jarvis</a>
-        <a href="#worktrees">Worktrees</a>
+      <div class="nav-brand">
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 4l7.5 13h-15L12 6z"/></svg>
+        </div>
+        <span class="nav-title">Copy <span>Chief</span></span>
+      </div>
+      <button class="nav-toggle" onclick="toggleNav()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="#quick-start">Quick Start</a>
+        <a href="#what-is">O Que E</a>
         <a href="#workflow">Workflow</a>
-        <a href="#decisoes">Decisoes</a>
+        <a href="#commands">Comandos</a>
+        <a href="#skills">Skills</a>
+        <a href="#mcp">MCP</a>
+        <a href="#jarvis">Jarvis</a>
         <a href="#troubleshooting">Problemas</a>
         <a href="#checklist">Checklist</a>
       </div>
     </div>
+    <div class="nav-progress" id="navProgress" style="width: 0%"></div>
   </nav>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Tutorial Definitivo</h1>
-      <p class="subtitle">De orquestrador a Copy Chief - 100% do potencial do ecossistema</p>
-      <div>
-        <span class="badge success">v6.0</span>
-        <span class="badge primary">8 Skills</span>
-        <span class="badge">9 Comandos</span>
-        <span class="badge">24 Hooks</span>
-        <span class="badge" style="background: rgba(139,92,246,0.2); border-color: #8b5cf6;">7 MCP Tools</span>
-        <span class="badge" style="background: rgba(239,68,68,0.2); border-color: #ef4444;">Nivel Jarvis</span>
+  <!-- HERO - QUICK START -->
+  <section class="hero" id="quick-start">
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L1 21h22L12 2zm0 4l7.5 13h-15L12 6z"/>
+        </svg>
+        JARVIS SYSTEM v6.0
+      </div>
+
+      <h1>Copy Chief Ecosystem</h1>
+      <p class="hero-subtitle">De orquestrador a <strong>Copy Chief</strong> em 3 comandos</p>
+
+      <div class="quick-start">
+        <div class="quick-start-header">
+          <div class="quick-start-icon">
+            <svg viewBox="0 0 24 24"><path d="M13 3v6h8l-8 12v-6H5l8-12z"/></svg>
+          </div>
+          <h2>Quick Start - Sua Primeira Oferta</h2>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
+            <div class="terminal-title">Terminal</div>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="terminal-number">1</span>
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">cd ~/copywriting-ecosystem && claude</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-comment"># Sempre abrir da raiz!</span>
+            </div>
+            <div class="terminal-line" style="margin-top: var(--space-sm)">
+              <span class="terminal-number">2</span>
+              <span class="terminal-prompt">></span>
+              <span class="terminal-command">/ecosystem-guide</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-comment"># "Crie estrutura para oferta X no nicho Y"</span>
+            </div>
+            <div class="terminal-line" style="margin-top: var(--space-sm)">
+              <span class="terminal-number">3</span>
+              <span class="terminal-prompt">></span>
+              <span class="terminal-command">/squad-research nicho/oferta</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-comment"># Sistema faz TUDO: VOC, competitors, mechanism, avatar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-badge">
+          <span class="value">8</span>
+          <span class="label">Skills</span>
+        </div>
+        <div class="stat-badge">
+          <span class="value">9</span>
+          <span class="label">Commands</span>
+        </div>
+        <div class="stat-badge">
+          <span class="value">7</span>
+          <span class="label">MCP Tools</span>
+        </div>
+        <div class="stat-badge gold">
+          <span class="value">24</span>
+          <span class="label">Hooks</span>
+        </div>
+        <div class="stat-badge red">
+          <span class="value">Jarvis</span>
+          <span class="label">Mode</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PARTE 1: FUNDAMENTOS -->
-  <section id="fundamentos">
+  <!-- O QUE E ISSO? -->
+  <section id="what-is">
     <div class="container">
-      <h2 class="section-title"><span class="section-number">1</span> Fundamentos</h2>
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div>
+          <h2 class="section-title">O Que E Isso?</h2>
+          <p class="section-subtitle">Entenda em 30 segundos</p>
+        </div>
+      </div>
 
       <div class="card highlight">
-        <h3>O que e o Ecossistema?</h3>
-        <p>Um sistema que <strong>substitui o operacional humano</strong> na producao de copy. O humano se torna <strong>orquestrador estrategico</strong>: toma decisoes criticas enquanto o sistema pesquisa, preenche briefings e produz copy.</p>
-        <p style="margin-top:0.5rem"><strong>Pipeline:</strong> PESQUISA → HELIX BRIEFING → PRODUCAO → VALIDACAO</p>
-      </div>
-
-      <div class="card">
-        <h3>Divisao de Trabalho</h3>
-        <table>
-          <tr><th>Humano (5% do tempo)</th><th>Sistema (95% do tempo)</th></tr>
-          <tr><td>Define visao da oferta</td><td>Extrai 200+ quotes VOC de 5+ plataformas</td></tr>
-          <tr><td>Escolhe MUP e MUS (Fases 5-6)</td><td>Minera Ads Library com Scale Score</td></tr>
-          <tr><td>Aprova gates entre fases</td><td>Preenche 10 fases HELIX automaticamente</td></tr>
-          <tr><td>Ajustes finais de tom/voz</td><td>Produz VSL + LP + Criativos + Emails</td></tr>
-          <tr><td>Aprovacao final para publicar</td><td>Valida consistencia e roda stress-test</td></tr>
-        </table>
-      </div>
-
-      <div class="card warning">
-        <h3>O que sao "Gates"?</h3>
-        <p><strong>Bloqueios de qualidade entre fases.</strong> Se os criterios nao forem cumpridos, o sistema NAO avanca. Cada gate valida automaticamente:</p>
-        <ul>
-          <li><strong>Research Gate:</strong> synthesis.md + 4 summaries + confidence ≥70%</li>
-          <li><strong>Briefing Gate:</strong> 10 fases HELIX + MUP/MUS STAND ≥80%</li>
-          <li><strong>Production Gate:</strong> Secao GATE em todas copys + consistencia</li>
-          <li><strong>Gate #5 (v6.0):</strong> Production Gates - bloqueia escrita em <code>production/</code> sem research/briefing completos</li>
-          <li><strong>Gate #6 (v6.0):</strong> Anti-Homogeneizacao - detecta e rejeita copy generica automaticamente</li>
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--arc-blue)">
+            <path d="M12 2L1 21h22L12 2zm0 4l7.5 13h-15L12 6z"/>
+          </svg>
+          Pense no Jarvis do Tony Stark
+        </h3>
+        <p>O Copy Chief Ecosystem e o seu <strong>Jarvis para copywriting</strong>. Voce da as ordens estrategicas, ele executa todo o trabalho pesado:</p>
+        <ul style="margin-top: var(--space-sm)">
+          <li>Extrai 200+ quotes de
+            <span class="tooltip-trigger">VOC
+              <span class="tooltip">Voice of Customer - comentarios reais do publico-alvo</span>
+            </span>
+          </li>
+          <li>Minera concorrentes na Ads Library</li>
+          <li>Preenche 10 fases de briefing automaticamente</li>
+          <li>Produz VSL + Landing Page + Criativos + Emails</li>
         </ul>
-        <div class="code-block">
-<span class="comment"># Validar gate manualmente:</span>
-python3 scripts/validate-gate.py RESEARCH concursos/hacker
-<span class="comment"># PASSED = pode avancar | BLOCKED = lista o que falta</span>
+        <p style="margin-top: var(--space-md)"><strong>Voce foca nas decisoes estrategicas (5% do tempo). O sistema executa (95%).</strong></p>
+      </div>
 
-<span class="comment"># NOVO v6.0 - Gates sao enforced automaticamente via hooks</span>
-<span class="comment"># Se escrever em production/ sem research → BLOQUEIO</span>
-<span class="comment"># Escape: adicionar --force-production no prompt</span>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Humano Decide</h3>
+          <ul>
+            <li>Visao da oferta</li>
+            <li>
+              <span class="tooltip-trigger">MUP
+                <span class="tooltip">Mecanismo Unico do Problema</span>
+              </span> e
+              <span class="tooltip-trigger">MUS
+                <span class="tooltip">Mecanismo Unico da Solucao</span>
+              </span>
+            </li>
+            <li>Aprova gates entre fases</li>
+            <li>Ajustes de tom/voz</li>
+            <li>Aprovacao final</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Sistema Executa</h3>
+          <ul>
+            <li>Extrai 200+ quotes VOC</li>
+            <li>Calcula Scale Score de ads</li>
+            <li>Preenche 10 fases HELIX</li>
+            <li>Produz todos deliverables</li>
+            <li>Valida consistencia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW SIMPLIFICADO -->
+  <section id="workflow">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div>
+          <h2 class="section-title">Workflow em 5 Fases</h2>
+          <p class="section-subtitle">Do zero ao publicado</p>
+        </div>
+      </div>
+
+      <div class="workflow-cards">
+        <div class="workflow-card">
+          <div class="phase-num">0</div>
+          <h4>Setup</h4>
+          <p>Cria estrutura</p>
+          <div class="time">/ecosystem-guide</div>
+        </div>
+        <div class="workflow-card">
+          <div class="phase-num">1</div>
+          <h4>Research</h4>
+          <p>VOC + Competitors</p>
+          <div class="time">/squad-research</div>
+        </div>
+        <div class="workflow-card">
+          <div class="phase-num">2</div>
+          <h4>Briefing</h4>
+          <p>10 Fases HELIX</p>
+          <div class="time">/helix-system-agent</div>
+        </div>
+        <div class="workflow-card">
+          <div class="phase-num">3</div>
+          <h4>Producao</h4>
+          <p>VSL + LP + Criativos</p>
+          <div class="time">/produce-offer</div>
+        </div>
+        <div class="workflow-card">
+          <div class="phase-num">4</div>
+          <h4>Validacao</h4>
+          <p>Stress-test + QA</p>
+          <div class="time">/review-all</div>
         </div>
       </div>
 
       <div class="card danger">
-        <h3>REGRA #1: Sempre Operar da Raiz</h3>
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--danger)">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2h2v2h-2zm0-4V7h2v6h-2z"/>
+          </svg>
+          REGRA #1: Sempre Abrir da Raiz
+        </h3>
         <div class="code-block">
 <span class="comment"># CORRETO - Sempre assim:</span>
 <span class="highlight">cd ~/copywriting-ecosystem && claude</span>
 
 <span class="comment"># ERRADO - Nunca assim:</span>
 cd ~/copywriting-ecosystem/concursos/hacker && claude
-cd ~ && claude
         </div>
-        <p><strong>Por que?</strong></p>
-        <ul>
-          <li>Claude Code carrega CLAUDE.md do diretorio atual</li>
-          <li>Hooks dependem de <code>$(pwd)</code> para descobrir contexto</li>
-          <li>Path errado = instrucoes incompletas + hooks quebrados</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Como especificar oferta?</strong> Passa no comando:</p>
-        <div class="code-block">
-/squad-research concursos/hacker
-"crie criativos para concursos/gabaritando-lei-seca"
-"continue o briefing do concursos/concursa-ai"
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARTE 2: ANATOMIA -->
-  <section id="anatomia">
-    <div class="container">
-      <h2 class="section-title"><span class="section-number">2</span> Anatomia do Ecossistema</h2>
-
-      <div class="card">
-        <h3>Configuracao Global (~/.claude/)</h3>
-        <p>Tudo que controla o comportamento do Claude Code:</p>
-        <div class="tree">
-<span class="folder">~/.claude/</span>
-├── <span class="file">CLAUDE.md</span>         <span class="note">← Instrucoes GLOBAIS (sempre carregado)</span>
-├── <span class="file">settings.json</span>     <span class="note">← Hooks, model, env vars</span>
-├── <span class="file">mcp.json</span>          <span class="note">← MCP servers (Apify, Playwright, copywriting, etc)</span>
-├── <span class="file">.version</span>          <span class="note">← v5.6 (single source of truth)</span>
-│
-├── <span class="folder">skills/</span>           <span class="note">← 8 agents especializados (SKILL.md cada)</span>
-├── <span class="folder">commands/</span>         <span class="note">← 9 slash commands (/.md cada)</span>
-├── <span class="folder">hooks/</span>            <span class="note">← 19 hooks de automacao (.ts/.sh)</span>
-├── <span class="folder">plugins/</span>          <span class="note">← MCP plugins (copywriting-mcp)</span>
-│   └── <span class="folder">copywriting-mcp/</span>  <span class="note">← 7 tools + SQLite + 3 hooks</span>
-├── <span class="folder">templates/</span>        <span class="note">← Templates de pesquisa (ads-library, VOC, trends)</span>
-├── <span class="folder">rules/</span>            <span class="note">← 5 regras path-specific</span>
-└── <span class="folder">references/</span>       <span class="note">← Copy fundamentals (psicologia, estrutura, erros)</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Estrutura de uma Oferta</h3>
-        <p>Cada oferta segue esta estrutura padronizada:</p>
-        <div class="tree">
-<span class="folder">concursos/hacker/</span>                  <span class="note">← {nicho}/{oferta}/</span>
-├── <span class="file">CLAUDE.md</span>              <span class="note">← Overview: ticket, tipo, expert</span>
-├── <span class="file">project_state.yaml</span>    <span class="note">← Estado atual (fonte de verdade)</span>
-│
-├── <span class="folder">research/</span>              <span class="note">← FASE 1</span>
-│   ├── <span class="file">synthesis.md</span>       <span class="note">← Consolidacao (≤15K tokens)</span>
-│   ├── <span class="folder">voc/</span>
-│   │   ├── <span class="file">summary.md</span>     <span class="note">← Resumo (≤500 tokens)</span>
-│   │   ├── <span class="folder">processed/</span>   <span class="note">← pain-points, desires, objections, language</span>
-│   │   ├── <span class="folder">raw/</span>          <span class="note">← Dados brutos (nunca carregar ao contexto)</span>
-│   │   └── <span class="file">trends-analysis.md</span>  <span class="note">← Formato + Angulo + Tendencia</span>
-│   ├── <span class="folder">competitors/</span>
-│   │   └── <span class="file">ads-library-spy.md</span>  <span class="note">← Scale Score + Top videos</span>
-│   ├── <span class="folder">mechanism/</span>
-│   │   └── <span class="file">summary.md</span>
-│   └── <span class="folder">avatar/</span>
-│       └── <span class="file">summary.md</span>
-│
-├── <span class="folder">briefings/</span>             <span class="note">← FASE 2</span>
-│   ├── <span class="folder">phases/</span>          <span class="note">← 10 fases HELIX</span>
-│   │   ├── <span class="file">fase01_identificacao.md</span>
-│   │   ├── <span class="file">fase05_mup.md</span>        <span class="note">← DECISAO HUMANA</span>
-│   │   ├── <span class="file">fase06_mus.md</span>        <span class="note">← DECISAO HUMANA</span>
-│   │   └── <span class="file">fase10_validacao.md</span>
-│   └── <span class="folder">validations/</span>     <span class="note">← Resultados do copy-critic</span>
-│
-├── <span class="folder">production/</span>            <span class="note">← FASE 3</span>
-│   ├── <span class="folder">vsl/parts/</span>       <span class="note">← Script VSL em partes</span>
-│   ├── <span class="folder">landing-page/</span>    <span class="note">← 14 blocos LP</span>
-│   ├── <span class="folder">creatives/</span>       <span class="note">← 7+ criativos</span>
-│   └── <span class="folder">emails/</span>          <span class="note">← Sequencia de emails</span>
-│
-└── <span class="folder">reviews/</span>               <span class="note">← FASE 4 - Validacoes</span>
-        </div>
+        <p><strong>Por que?</strong> Hooks e instrucoes dependem do diretorio. Local errado = comportamento imprevisivel.</p>
       </div>
 
       <div class="card highlight">
-        <h3>Hierarquia de Contexto</h3>
-        <p>Claude carrega instrucoes nesta ordem (de mais importante para menos):</p>
-        <div class="code-block">
-<span class="highlight">1. ~/.claude/CLAUDE.md</span>                <span class="comment">← GLOBAL (autoritativo)</span>
-2. ~/copywriting-ecosystem/CLAUDE.md   <span class="comment">← PROJETO</span>
-3. {nicho}/biblioteca_nicho_*.md       <span class="comment">← NICHO (VOC consolidada)</span>
-4. {oferta}/CLAUDE.md                  <span class="comment">← OFERTA (overview)</span>
-        </div>
-        <p><strong>Regra:</strong> Nunca criar CLAUDE.md em subdiretorios (cria conflitos).</p>
-      </div>
-
-      <div class="card">
-        <h3>5 Regras Path-Specific</h3>
+        <h3>O que sao "Gates"?</h3>
+        <p><strong>Bloqueios automaticos de qualidade.</strong> Se os criterios nao forem cumpridos, o sistema NAO avanca:</p>
         <table>
-          <tr><th>Arquivo</th><th>Ativa quando</th><th>Conteudo</th></tr>
-          <tr><td><code>ecosystem.md</code></td><td>Sempre</td><td>Design sistemico, auto-descoberta, hygiene</td></tr>
-          <tr><td><code>copy-chief.md</code></td><td>Sempre</td><td>Quality gates, validation gate</td></tr>
-          <tr><td><code>voc-research.md</code></td><td>Sempre</td><td>Ads Library Spy, VOC Protocol</td></tr>
-          <tr><td><code>copy-production.md</code></td><td>production/**</td><td>Regras de producao</td></tr>
-          <tr><td><code>briefings-helix.md</code></td><td>briefings/**</td><td>Regras de briefing</td></tr>
+          <tr>
+            <th>Gate</th>
+            <th>Valida</th>
+            <th>Bloqueio</th>
+          </tr>
+          <tr>
+            <td><span class="tooltip-trigger">Research<span class="tooltip">synthesis.md + 4 summaries</span></span></td>
+            <td>VOC + Competitors + Mechanism + Avatar</td>
+            <td>Nao avanca para Briefing</td>
+          </tr>
+          <tr>
+            <td>Briefing</td>
+            <td>10 fases HELIX + MUP/MUS aprovados</td>
+            <td>Nao avanca para Producao</td>
+          </tr>
+          <tr>
+            <td>Production</td>
+            <td>Secao GATE em todas copys</td>
+            <td>Copy rejeitada automaticamente</td>
+          </tr>
+          <tr>
+            <td style="color: var(--danger)">Anti-Homo (v6.0)</td>
+            <td>Genericidade Score >= 8/10</td>
+            <td>Copy generica = refazer</td>
+          </tr>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- PARTE 3: SKILLS -->
+  <!-- COMANDOS ESSENCIAIS -->
+  <section id="commands">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div>
+          <h2 class="section-title">Top 6 Comandos</h2>
+          <p class="section-subtitle">Memorize apenas estes</p>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <h3>/ecosystem-guide</h3>
+          <p>Criar nova oferta, ver estado, proximo passo</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/ecosystem-guide</span>
+<span class="comment"># "em que fase esta X?"</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>/squad-research</h3>
+          <p>Research paralelo (4 agentes simultaneos)</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/squad-research concursos/hacker</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>/helix-system-agent</h3>
+          <p>Briefing HELIX (10 fases)</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/helix-system-agent</span>
+<span class="comment"># "preencha briefing para X"</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>/produce-offer</h3>
+          <p>Producao completa (VSL + LP + Criativos)</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/produce-offer concursos/hacker</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>/copy-critic</h3>
+          <p>Stress-test adversarial de copy</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/copy-critic</span>
+<span class="comment"># "valide o MUP"</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>/review-all</h3>
+          <p>Validacao multi-modelo completa</p>
+          <div class="code-block" style="margin-bottom: 0">
+<span class="command">/review-all concursos/hacker</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card success">
+        <h3>Dica: Comando vs Prompt Natural</h3>
+        <table>
+          <tr>
+            <th>Use Comando /</th>
+            <th>Use Prompt Natural</th>
+          </tr>
+          <tr>
+            <td>Fase INTEIRA: <code>/squad-research</code></td>
+            <td>Tarefa especifica: "extraia VOC so do YouTube"</td>
+          </tr>
+          <tr>
+            <td>Todos deliverables: <code>/produce-offer</code></td>
+            <td>Especifico: "crie 3 criativos de raiva"</td>
+          </tr>
+          <tr>
+            <td>Validacao completa: <code>/review-all</code></td>
+            <td>Especifico: "valide so o MUP"</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP DIVE: SKILLS -->
   <section id="skills">
     <div class="container">
-      <h2 class="section-title"><span class="section-number">3</span> As 8 Skills</h2>
-      <p style="margin-bottom:1rem">Skills sao ativadas <strong>automaticamente</strong> quando voce usa palavras-chave. Voce NAO precisa chamar por nome.</p>
+      <div class="section-header">
+        <div class="section-number gold">+</div>
+        <div>
+          <h2 class="section-title">Deep Dive: 8 Skills</h2>
+          <p class="section-subtitle">Agentes especializados (ativados por palavras-chave)</p>
+        </div>
+      </div>
+
+      <p style="margin-bottom: var(--space-lg); color: var(--text-secondary)">Skills sao ativadas <strong>automaticamente</strong> quando voce usa palavras-chave. Clique para expandir:</p>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">audience-research-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>audience-research-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Orquestra 4 fases de pesquisa de publico</p>
           <p><strong>Triggers:</strong> "pesquisa publico", "avatar", "VOC", "dores do avatar"</p>
           <p><strong>NAO faz:</strong> Nao produz copy. Nao preenche HELIX.</p>
-          <p><strong>Output:</strong> <code>voc_library_[nicho].yaml</code> (score ≥70/100)</p>
+          <p><strong>Output:</strong> <code>voc_library_[nicho].yaml</code> (score >=70/100)</p>
           <div class="code-block">"faca pesquisa de publico para concursos/hacker"</div>
         </div>
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">voc-research-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>voc-research-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Extracao tecnica de VOC (Voice of Customer)</p>
           <p><strong>Triggers:</strong> "extrair comentarios", "coletar VOC", "quotes YouTube"</p>
-          <p><strong>Tool Priority:</strong> Apify (1o) → Playwright (2o) → Firecrawl (3o) → WebSearch (ultimo)</p>
+          <p><strong>Tool Priority:</strong> Apify (1o) -> Playwright (2o) -> Firecrawl (3o) -> WebSearch (ultimo)</p>
           <p><strong>Estrategia:</strong> Viral-First: so extrai de conteudo com 10K+ views (YT), 5K+ likes (IG), 50K+ views (TT)</p>
-          <p><strong>Output:</strong> <code>voc/raw/*-viral-extraction.md</code> com metricas de engajamento</p>
           <div class="code-block">"extraia comentarios dos top 10 videos sobre concurso no YouTube"</div>
         </div>
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">helix-system-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>helix-system-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Preenche as 10 fases do briefing HELIX</p>
           <p><strong>Triggers:</strong> "briefing VSL", "preencher HELIX", "MUP/MUS"</p>
           <p><strong>IMPORTANTE:</strong> Fases 5 (MUP) e 6 (MUS) requerem <strong>DECISAO HUMANA</strong></p>
-          <p><strong>Checkpoint:</strong> copy-critic OBRIGATORIO no MUP e MUS antes de avancar</p>
-          <p><strong>Features v5.6+:</strong></p>
-          <ul>
-            <li>Usa framework <strong>First Principles</strong> (primeiros-principios-copy-chief.md) - consolidacao Khayat + Max Peters + Vitor Mound</li>
-            <li><strong>Principio da Inversao de Crenca</strong> substituiu "4 Pilares Big Ideas"</li>
-            <li>Referencias organizadas em <strong>5 niveis de prioridade</strong> (Biblias → Frameworks → Tecnicas → Nicho → Oferta)</li>
-          </ul>
-          <p><strong>NOVO v6.0:</strong></p>
-          <ul>
-            <li><strong>Gate Enforcement:</strong> Nao avanca sem research completo</li>
-            <li><strong>Anti-Homogeneizacao:</strong> MUP/MUS verificados contra cliches</li>
-          </ul>
-          <p><strong>Output:</strong> <code>briefings/phases/fase-01-10.md</code></p>
+          <p><strong>v6.0:</strong> Gate Enforcement - nao avanca sem research completo</p>
           <div class="code-block">/helix-system-agent
 <span class="comment"># ou</span>
 "preencha briefing HELIX para concursos/hacker"</div>
@@ -407,54 +1571,56 @@ cd ~ && claude
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">criativos-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>criativos-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Cria criativos de Direct Response com metodologia CORE</p>
           <p><strong>Triggers:</strong> "criar anuncio", "hook", "criar UGC", "analisar criativo"</p>
           <p><strong>Metodologia:</strong> 3Ms (Misterio/Mecanismo/Mercado) + NUUPPECC (min 5/8)</p>
           <p><strong>Gate Entrada:</strong> OBRIGATORIO ler research + swipes antes de escrever</p>
-          <p><strong>Output:</strong> Copy limpa + secao GATE + analise tecnica</p>
           <div class="code-block">"crie 5 criativos para concursos/hacker usando angulo de raiva"</div>
         </div>
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">landing-page-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>landing-page-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Gera os 14 blocos de uma Landing Page</p>
           <p><strong>Triggers:</strong> "criar LP", "landing page", "pagina de vendas"</p>
-          <p><strong>14 Blocos:</strong> Headline → Depoimentos → Ruminacao → Passo a Passo → Beneficios → Entregaveis → Bonus → Para Quem → Recapitulacao → CTA → Como Acessar → Conversa Seria → Autoridade → FAQ</p>
-          <p><strong>Output:</strong> <code>production/landing-page/lp-complete.md</code></p>
+          <p><strong>14 Blocos:</strong> Headline -> Depoimentos -> Ruminacao -> Passo a Passo -> Beneficios -> Entregaveis -> Bonus -> Para Quem -> Recapitulacao -> CTA -> Como Acessar -> Conversa Seria -> Autoridade -> FAQ</p>
           <div class="code-block">"crie landing page para concursos/gabaritando-lei-seca"</div>
         </div>
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">production-agent <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>production-agent</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Orquestra producao com contexto isolado de 200K tokens</p>
           <p><strong>Triggers:</strong> "produzir copy", "criar VSL", "producao em lote"</p>
-          <p><strong>Pre-flight:</strong> Valida se research foi feito (BLOQUEANTE)</p>
-          <p><strong>NOVO v6.0:</strong></p>
-          <ul>
-            <li><strong>Gate Enforcement:</strong> Nao inicia sem Research Gate + Briefing Gate passados</li>
-            <li><strong>Anti-Homogeneizacao:</strong> Verifica genericidade de cada output</li>
-            <li><strong>Genericidade Score:</strong> Minimo 8/10 para aprovar copy</li>
-            <li><strong>Cliches Check:</strong> Rejeita automaticamente palavras banidas</li>
-          </ul>
-          <p><strong>Output:</strong> VSL + LP + Criativos + Emails (completo)</p>
+          <p><strong>v6.0:</strong> Bloqueado se Research + Briefing Gates nao passaram</p>
+          <p><strong>Genericidade Score:</strong> Minimo 8/10 para aprovar copy</p>
           <div class="code-block">/produce-offer concursos/hacker
-<span class="comment"># v6.0: Bloqueado se research incompleto</span>
-<span class="comment"># v6.0: Warning se genericidade &lt; 8/10</span></div>
+<span class="comment"># v6.0: Bloqueado se research incompleto</span></div>
         </div>
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">copy-critic <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>copy-critic</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Analise adversarial de copy em 5 fases</p>
           <p><strong>Triggers:</strong> "validar MUP", "stress-test", "sera que funciona?"</p>
-          <p><strong>5 Fases:</strong> Decompose → Verify → Challenge → Synthesize → Zen MCP</p>
+          <p><strong>5 Fases:</strong> Decompose -> Verify -> Challenge -> Synthesize -> Zen MCP</p>
           <p><strong>Verdicts:</strong> STAND (aprovado) | REVISE (ajustar) | ESCALATE (refazer)</p>
           <div class="code-block">/copy-critic
 "valide o MUP do hacker - sera que o avatar acredita?"</div>
@@ -462,7 +1628,10 @@ cd ~ && claude
       </div>
 
       <div class="accordion">
-        <div class="accordion-header" onclick="toggleAccordion(this)">ecosystem-guide <span>+</span></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>ecosystem-guide</span>
+          <span class="icon">+</span>
+        </div>
         <div class="accordion-content">
           <p><strong>Faz:</strong> Orquestrador geral - navega o ecossistema</p>
           <p><strong>Triggers:</strong> "nova oferta", "qual fase", "onde parei", "proximo passo"</p>
@@ -475,734 +1644,570 @@ cd ~ && claude
     </div>
   </section>
 
-  <!-- PARTE 3.5: MCP PLUGIN -->
+  <!-- DEEP DIVE: MCP -->
   <section id="mcp">
     <div class="container">
-      <h2 class="section-title"><span class="section-number" style="background: #8b5cf6;">+</span> Plugin MCP: copywriting-mcp</h2>
-      <p style="margin-bottom:1rem"><strong>NOVO em v5.5, expandido em v6.0:</strong> Plugin MCP especializado para copywriting com database SQLite local, validacao automatica e integracao com Gate Enforcement.</p>
+      <div class="section-header">
+        <div class="section-number gold">+</div>
+        <div>
+          <h2 class="section-title">Deep Dive: MCP Plugin</h2>
+          <p class="section-subtitle">7 tools especializadas + SQLite local</p>
+        </div>
+      </div>
 
       <div class="card highlight">
-        <h3>O que e o copywriting-mcp?</h3>
-        <p>Um servidor MCP (Model Context Protocol) que adiciona <strong>7 ferramentas especializadas</strong> para copywriting, com persistencia local em SQLite.</p>
-        <p style="margin-top:0.5rem"><strong>Diferenca Skills vs MCP Tools:</strong></p>
-        <ul>
-          <li><strong>Skills:</strong> Orquestram workflows completos (pesquisa → briefing → producao)</li>
-          <li><strong>MCP Tools:</strong> Operacoes atomicas rapidas (buscar VOC, validar gate, revisar copy)</li>
-        </ul>
+        <h3>Skills vs MCP Tools</h3>
+        <table>
+          <tr>
+            <th>Skills</th>
+            <th>MCP Tools</th>
+          </tr>
+          <tr>
+            <td>Workflows completos (pesquisa -> producao)</td>
+            <td>Operacoes atomicas rapidas</td>
+          </tr>
+          <tr>
+            <td><code>/helix-system-agent</code></td>
+            <td><code>get_phase_context</code></td>
+          </tr>
+          <tr>
+            <td><code>/copy-critic</code></td>
+            <td><code>blind_critic</code>, <code>emotional_stress_test</code></td>
+          </tr>
+        </table>
       </div>
 
       <div class="card">
         <h3>7 Tools Disponiveis</h3>
         <table>
-          <tr><th>Tool</th><th>Funcao</th><th>Exemplo de Uso</th></tr>
+          <tr>
+            <th>Tool</th>
+            <th>Funcao</th>
+          </tr>
           <tr>
             <td><code>voc_search</code></td>
             <td>Busca VOC por emocao/keyword/intensidade</td>
-            <td>voc_search emotion="frustracao" nicho="concursos"</td>
           </tr>
           <tr>
             <td><code>get_phase_context</code></td>
             <td>Carrega contexto da fase HELIX</td>
-            <td>get_phase_context phase=5 offer_path="concursos/hacker"</td>
           </tr>
           <tr>
             <td><code>validate_gate</code></td>
             <td>Valida gates (research/briefing/production)</td>
-            <td>validate_gate gate_type="research" offer_path="..."</td>
           </tr>
           <tr>
             <td><code>blind_critic</code></td>
             <td>Avaliacao cega (sem contexto de geracao)</td>
-            <td>blind_critic copy="[texto]" copy_type="hook"</td>
           </tr>
           <tr>
             <td><code>emotional_stress_test</code></td>
-            <td>4 testes: Genericidade, Visceral, Scroll-Stop, Prova Social</td>
-            <td>emotional_stress_test copy="[texto]"</td>
+            <td>4 testes: Genericidade, Visceral, Scroll-Stop, Prova</td>
           </tr>
           <tr>
             <td><code>write_chapter</code></td>
             <td>Escrita por capitulos (metodologia H&W)</td>
-            <td>write_chapter chapter=1 offer_path="..."</td>
           </tr>
           <tr>
             <td><code>layered_review</code></td>
             <td>Revisao em 3 camadas</td>
-            <td>layered_review copy="[texto]" layer=1</td>
           </tr>
         </table>
       </div>
 
-      <div class="card success">
-        <h3>O que o Plugin SUBSTITUI</h3>
-        <p>Estes scripts Python agora sao <strong>opcionais</strong> (MCP tools sao mais integrados):</p>
-        <ul>
-          <li><code>scripts/validate-gate.py</code> → Substituido por <code>validate_gate</code> tool</li>
-          <li><code>scripts/validate-research.sh</code> → Substituido por <code>validate_gate</code> tool</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Vantagem:</strong> Validacao agora acontece automaticamente via hooks, nao precisa rodar scripts manualmente.</p>
-      </div>
-
-      <div class="card">
-        <h3>O que o Plugin COMPLEMENTA (nao substitui)</h3>
-        <table>
-          <tr><th>Existente</th><th>Plugin Tool</th><th>Relacao</th></tr>
-          <tr><td>copy-critic skill</td><td>blind_critic + emotional_stress_test</td><td>Plugin = API rapida, Skill = workflow completo</td></tr>
-          <tr><td>voc-research-agent</td><td>voc_search</td><td>Agent EXTRAI, Tool BUSCA no DB</td></tr>
-          <tr><td>helix-system-agent</td><td>get_phase_context</td><td>Agent PREENCHE, Tool CARREGA contexto</td></tr>
-          <tr><td>production-agent</td><td>write_chapter + layered_review</td><td>Agent ORQUESTRA, Tools = helpers</td></tr>
-        </table>
-      </div>
-
       <div class="card warning">
-        <h3>5 Hooks do Plugin (3 originais + 2 v6.0)</h3>
+        <h3>5 Hooks Automaticos</h3>
         <table>
-          <tr><th>Hook</th><th>Trigger</th><th>Funcao</th></tr>
-          <tr><td><code>session-start.ts</code></td><td>Inicio de sessao</td><td>Context injection automatico da oferta ativa</td></tr>
-          <tr><td><code>pre-compact.ts</code></td><td>Antes de /compact</td><td>Salva estado no SQLite (recovery garantido)</td></tr>
-          <tr><td><code>pre-tool-use.ts</code></td><td>Antes de Write em production/</td><td>Gate enforcement automatico</td></tr>
-          <tr><td><code>pre-tool-use-gate.ts</code></td><td>Antes de Edit/Write</td><td><strong>v6.0:</strong> Valida Research + Briefing Gates</td></tr>
-          <tr><td><code>post-tool-use.ts</code></td><td>Apos Write em production/</td><td><strong>v6.0:</strong> Anti-Homogeneizacao check</td></tr>
+          <tr>
+            <th>Hook</th>
+            <th>Trigger</th>
+            <th>Funcao</th>
+          </tr>
+          <tr>
+            <td><code>session-start.ts</code></td>
+            <td>Inicio sessao</td>
+            <td>Context injection automatico</td>
+          </tr>
+          <tr>
+            <td><code>pre-compact.ts</code></td>
+            <td>/compact</td>
+            <td>Salva estado no SQLite</td>
+          </tr>
+          <tr>
+            <td><code>pre-tool-use.ts</code></td>
+            <td>Write em production/</td>
+            <td>Gate enforcement</td>
+          </tr>
+          <tr>
+            <td style="color: var(--danger)"><code>pre-tool-use-gate.ts</code></td>
+            <td>Edit/Write</td>
+            <td><strong>v6.0:</strong> Valida Gates</td>
+          </tr>
+          <tr>
+            <td style="color: var(--danger)"><code>post-tool-use.ts</code></td>
+            <td>Write production/</td>
+            <td><strong>v6.0:</strong> Anti-Homo check</td>
+          </tr>
         </table>
-      </div>
-
-      <div class="card">
-        <h3>Database SQLite Local</h3>
-        <p>O plugin usa SQLite para persistencia local (100% offline, zero custo):</p>
-        <div class="tree">
-<span class="folder">~/.claude/plugins/copywriting-mcp/</span>
-├── <span class="folder">data/</span>
-│   └── <span class="file">copywriting.db</span>     <span class="note">← SQLite database</span>
-├── <span class="folder">src/</span>
-│   ├── <span class="file">server.ts</span>           <span class="note">← MCP entry point</span>
-│   └── <span class="folder">tools/</span>              <span class="note">← 7 tools</span>
-├── <span class="folder">hooks/</span>                  <span class="note">← 3 hooks</span>
-└── <span class="folder">prompts/</span>                <span class="note">← Templates (puzzle-pieces, vsl-writer, etc)</span>
-        </div>
-        <p style="margin-top:0.5rem"><strong>Tabelas:</strong> voc_quotes, swipes, competitors, validations, helix_progress, session_state</p>
-      </div>
-
-      <div class="card highlight">
-        <h3>Quando usar MCP Tools vs Skills?</h3>
-        <div class="decision-tree">
-<span class="q">Preciso de workflow COMPLETO (pesquisa → producao)?</span>
-  <span class="yes">SIM →</span> Usar SKILL (ex: /helix-system-agent)
-  <span class="no">NAO →</span> Continue...
-
-<span class="q">Preciso de operacao RAPIDA e especifica?</span>
-  <span class="yes">SIM →</span> Usar MCP TOOL (ex: voc_search, validate_gate)
-  <span class="no">NAO →</span> Continue...
-
-<span class="q">Quero validar copy rapidamente?</span>
-  <span class="yes">SIM →</span> blind_critic ou emotional_stress_test
-  <span class="no">NAO →</span> Usar skill ou prompt natural
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- PARTE 3.6: NIVEL JARVIS -->
+  <!-- NIVEL JARVIS -->
   <section id="jarvis">
     <div class="container">
-      <h2 class="section-title"><span class="section-number" style="background: #ef4444;">!</span> Nivel Jarvis - Gate Enforcement Automatico</h2>
-      <p style="margin-bottom:1rem"><strong>NOVO em v6.0:</strong> Sistema de enforcement automatico que garante qualidade sem intervencao manual.</p>
+      <div class="section-header">
+        <div class="section-number red">!</div>
+        <div>
+          <h2 class="section-title">Nivel Jarvis - Gate Enforcement</h2>
+          <p class="section-subtitle">v6.0: O sistema NAO deixa voce errar</p>
+        </div>
+      </div>
 
       <div class="card highlight">
-        <h3>O que e o Nivel Jarvis?</h3>
-        <p>Sistema de <strong>enforcement automatico</strong> que:</p>
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--arc-blue)">
+            <path d="M12 2L1 21h22L12 2zm0 4l7.5 13h-15L12 6z"/>
+          </svg>
+          O que e o Nivel Jarvis?
+        </h3>
+        <p>Sistema de <strong>enforcement automatico</strong> que garante qualidade sem intervencao manual:</p>
         <ul>
           <li>Bloqueia producao sem research/briefing completos</li>
           <li>Detecta e rejeita copy generica automaticamente</li>
           <li>Calcula Genericidade Score (minimo 8/10)</li>
           <li>Impede cliches do nicho em qualquer copy</li>
         </ul>
-        <p style="margin-top:0.5rem"><strong>Filosofia:</strong> O sistema NAO deixa voce errar. Antes de produzir copy, ele valida automaticamente se voce tem os pre-requisitos.</p>
       </div>
 
-      <div class="card warning">
+      <div class="card danger">
         <h3>Gate #5: Production Gates</h3>
-        <p>Hook <code>pre-tool-use-gate.ts</code> bloqueia Write/Edit em <code>production/</code> se:</p>
-        <ul>
-          <li><strong>Research Gate nao passou:</strong> synthesis.md, VOC summary, competitors, mechanism, avatar</li>
-          <li><strong>Briefing Gate nao passou:</strong> 6+ fases HELIX, MUP/MUS definidos</li>
-        </ul>
+        <p>Bloqueia Write/Edit em <code>production/</code> se gates nao passaram:</p>
         <div class="code-block">
-<span class="comment"># Mensagem de bloqueio esperada:</span>
+<span class="comment"># Mensagem de bloqueio:</span>
 BLOQUEADO - Research incompleto
 Missing: voc/summary.md, competitors/ads-library-spy.md
 
-<span class="comment"># Escape phrase (use com cautela):</span>
+<span class="comment"># Escape (use com cautela):</span>
 <span class="highlight">"--force-production crie criativos para X"</span>
         </div>
       </div>
 
       <div class="card danger">
         <h3>Gate #6: Anti-Homogeneizacao</h3>
-        <p>Hook <code>post-tool-use.ts</code> verifica automaticamente ao escrever copy:</p>
         <table>
-          <tr><th>Verificacao</th><th>Threshold</th><th>Acao se Falhar</th></tr>
-          <tr><td>Cliches do nicho</td><td>0 permitidos</td><td>Warning + lista substituicoes</td></tr>
-          <tr><td>Palavras banidas</td><td>0 permitidas</td><td>Warning + lista alternativas</td></tr>
-          <tr><td>Nome proprietario</td><td>Obrigatorio</td><td>Warning se metodo generico</td></tr>
-          <tr><td>Genericidade Score</td><td>≥ 8/10</td><td>Warning "concorrente poderia usar"</td></tr>
+          <tr>
+            <th>Verificacao</th>
+            <th>Threshold</th>
+            <th>Acao se Falhar</th>
+          </tr>
+          <tr>
+            <td>Cliches do nicho</td>
+            <td>0 permitidos</td>
+            <td>Warning + substituicoes</td>
+          </tr>
+          <tr>
+            <td>Palavras banidas</td>
+            <td>0 permitidas</td>
+            <td>Warning + alternativas</td>
+          </tr>
+          <tr>
+            <td>Nome proprietario</td>
+            <td>Obrigatorio</td>
+            <td>Warning se generico</td>
+          </tr>
+          <tr>
+            <td>Genericidade Score</td>
+            <td>>= 8/10</td>
+            <td>"concorrente poderia usar"</td>
+          </tr>
         </table>
       </div>
 
       <div class="card">
-        <h3>Cliches Proibidos por Nicho</h3>
-        <p><strong>CONCURSOS:</strong></p>
-        <ul>
-          <li><code>"metodo infalivel"</code> → Use nome proprietario do metodo</li>
-          <li><code>"passe em menos tempo"</code> → Use prazo especifico + contexto</li>
-          <li><code>"decoreba nao funciona"</code> → Descreva problema especifico</li>
-          <li><code>"estudar de forma inteligente"</code> → Nomeie a tecnica</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Palavras Banidas (todos nichos):</strong></p>
-        <div class="code-block">
-revolucionario, inovador, incrivel, inacreditavel,
-transformacao, jornada, desbloquear, empoderar,
-segredo (sem especificacao), metodo (sem nome proprio)
-        </div>
-      </div>
-
-      <div class="card success">
         <h3>Genericidade Score</h3>
-        <p>Avaliacao automatica de 1-10:</p>
         <table>
-          <tr><th>Score</th><th>Significado</th><th>Acao</th></tr>
-          <tr><td>1-3</td><td>Qualquer concorrente usaria sem alteracao</td><td>REFAZER</td></tr>
-          <tr><td>4-5</td><td>Precisa adaptacao moderada</td><td>REVISAR</td></tr>
-          <tr><td>6-7</td><td>Relativamente unica</td><td>OK</td></tr>
-          <tr><td>8-10</td><td>Impossivel confundir com outro</td><td>APROVADO</td></tr>
+          <tr>
+            <th>Score</th>
+            <th>Significado</th>
+            <th>Acao</th>
+          </tr>
+          <tr>
+            <td>1-3</td>
+            <td>Qualquer concorrente usaria</td>
+            <td style="color: var(--danger)">REFAZER</td>
+          </tr>
+          <tr>
+            <td>4-5</td>
+            <td>Precisa adaptacao</td>
+            <td style="color: var(--warning)">REVISAR</td>
+          </tr>
+          <tr>
+            <td>6-7</td>
+            <td>Relativamente unica</td>
+            <td>OK</td>
+          </tr>
+          <tr>
+            <td>8-10</td>
+            <td>Impossivel confundir</td>
+            <td style="color: var(--success)">APROVADO</td>
+          </tr>
         </table>
-        <p style="margin-top:0.5rem"><strong>Threshold v6.0:</strong> Score &lt; 8 = Warning automatico</p>
-      </div>
-
-      <div class="card highlight">
-        <h3>Logo Test e Competitor Swap Test</h3>
-        <p><strong>Logo Test:</strong> "Se trocar o logo para o concorrente, ainda funciona?"</p>
-        <ul>
-          <li>Funciona sem alteracao → <strong>REFAZER</strong></li>
-          <li>Precisa alterar 20%+ → REVISAR</li>
-          <li>Claramente identificavel → APROVADO</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Competitor Swap Test:</strong> "Um concorrente poderia roubar esta copy?"</p>
-        <ul>
-          <li>Mecanismo e PROPRIETARIO?</li>
-          <li>Nome do produto/metodo aparece?</li>
-          <li>Ha elementos UNICOS da oferta?</li>
-          <li>Prova social e ESPECIFICA (nomes, numeros)?</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARTE 4: WORKTREES -->
-  <section id="worktrees">
-    <div class="container">
-      <h2 class="section-title"><span class="section-number">4</span> Worktrees e Paralelizacao</h2>
-
-      <div class="card">
-        <h3>O que sao Git Worktrees?</h3>
-        <p>Worktrees permitem ter <strong>multiplas branches abertas simultaneamente</strong> em diretorios separados, sem precisar fazer checkout.</p>
-        <div class="code-block">
-<span class="comment"># Sem worktrees: precisa trocar branch</span>
-git checkout feature-x  <span class="comment">← Muda TODOS os arquivos do diretorio</span>
-
-<span class="comment"># Com worktrees: dois diretorios, duas branches ATIVAS</span>
-~/projeto/           <span class="comment">← branch main</span>
-~/projeto-feature-x/ <span class="comment">← branch feature-x (worktree)</span>
-<span class="comment"># Pode trabalhar em ambos ao MESMO TEMPO</span>
-        </div>
-      </div>
-
-      <div class="card highlight">
-        <h3>Como claude-squad usa Worktrees</h3>
-        <p>O <code>/squad-research</code> cria 4 worktrees automaticamente:</p>
-        <div class="tree">
-<span class="folder">~/copywriting-ecosystem/</span>                  <span class="note">← main (orquestrador)</span>
-<span class="folder">~/copywriting-ecosystem-voc/</span>              <span class="note">← worktree (agente VOC)</span>
-<span class="folder">~/copywriting-ecosystem-competitors/</span>      <span class="note">← worktree (agente Competitors)</span>
-<span class="folder">~/copywriting-ecosystem-mechanism/</span>        <span class="note">← worktree (agente Mechanism)</span>
-<span class="folder">~/copywriting-ecosystem-avatar/</span>           <span class="note">← worktree (agente Avatar)</span>
-        </div>
-        <p style="margin-top:0.5rem">Cada agente escreve em seu worktree → ao final, faz merge automatico no main.</p>
-        <p><strong>Voce nao precisa gerenciar isso.</strong> O sistema cria e limpa automaticamente.</p>
-      </div>
-
-      <div class="card">
-        <h3>Comparacao: Sequential vs Parallel</h3>
-        <table>
-          <tr><th>Aspecto</th><th>/helix-parallel (Seq.)</th><th>/squad-research (Par.)</th></tr>
-          <tr><td>Tempo</td><td>90-180 min</td><td>30-60 min</td></tr>
-          <tr><td>Tokens usados</td><td>~200K (1 contexto)</td><td>~800K (4 contextos)</td></tr>
-          <tr><td>Custo</td><td>1x</td><td>4x</td></tr>
-          <tr><td>Facilidade</td><td>Mais facil de acompanhar</td><td>Mais complexo</td></tr>
-          <tr><td>Pre-requisito</td><td>Nenhum</td><td>tmux + gh CLI + claude-squad</td></tr>
-        </table>
-      </div>
-
-      <div class="card success">
-        <h3>Quando usar cada um?</h3>
-        <div class="decision-tree">
-<span class="q">Tenho deadline apertado?</span>
-  <span class="yes">SIM →</span> /squad-research (2-3x mais rapido)
-  <span class="no">NAO →</span> Continue...
-
-<span class="q">E minha primeira oferta no ecossistema?</span>
-  <span class="yes">SIM →</span> /helix-parallel (mais facil de aprender)
-  <span class="no">NAO →</span> Continue...
-
-<span class="q">Budget de tokens apertado?</span>
-  <span class="yes">SIM →</span> /helix-parallel (1x tokens)
-  <span class="no">NAO →</span> /squad-research (mais rapido)
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARTE 5: WORKFLOW -->
-  <section id="workflow">
-    <div class="container">
-      <h2 class="section-title"><span class="section-number">5</span> Workflow Passo-a-Passo</h2>
-
-      <div class="card danger">
-        <h3>ANTES DE TUDO</h3>
-        <div class="code-block">
-<span class="highlight">cd ~/copywriting-ecosystem && claude</span>
-<span class="comment"># SEMPRE comecar daqui. Nunca de subdiretorio.</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>FASE 0: Setup (5 min - Humano)</h3>
-        <div class="code-block">
-<span class="comment"># Opcao 1: Slash command</span>
-/ecosystem-guide
-
-<span class="comment"># Opcao 2: Prompt natural</span>
-"crie estrutura para oferta Hacker do Concurso no nicho concursos"
-        </div>
-        <p><strong>Verificar:</strong> Pasta criada com research/, briefings/, production/</p>
-        <p><strong>Proximo:</strong> "existe biblioteca para o nicho concursos?" → Se sim, sistema carrega antes do research</p>
-      </div>
-
-      <div class="card">
-        <h3>FASE 1: Research (30-180 min - Sistema)</h3>
-        <div class="code-block">
-<span class="comment"># Escolher um (da raiz!):</span>
-/squad-research concursos/hacker     <span class="comment">← Paralelo (rapido)</span>
-/helix-parallel concursos/hacker     <span class="comment">← Sequencial (padrao)</span>
-        </div>
-        <p><strong>O que o sistema faz sozinho:</strong></p>
-        <ul>
-          <li><strong>VOC:</strong> Extrai 200+ quotes de YouTube, TikTok, Instagram, Reddit</li>
-          <li><strong>Competitors:</strong> Minera Ads Library, calcula Scale Score</li>
-          <li><strong>Mechanism:</strong> Pesquisa mecanismos validados no nicho</li>
-          <li><strong>Avatar:</strong> Perfil psicografico com DRE Framework e sinestesia</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Quando intervir:</strong></p>
-        <ul>
-          <li>Menos de 100 quotes → "Continue extraindo VOC de [plataforma]"</li>
-          <li>Scale Score &lt; 10 em todos → "Expanda busca para keywords [X]"</li>
-          <li>Apify timeout → Sistema tenta Playwright automaticamente</li>
-        </ul>
-        <p style="margin-top:0.5rem"><strong>Como saber se terminou:</strong></p>
-        <div class="code-block">
-<span class="comment"># MCP Tool (v5.5+ - automatico)</span>
-<span class="highlight">validate_gate gate_type="research" offer_path="concursos/hacker"</span>
-
-<span class="comment"># ou Script Python (legado)</span>
-python3 scripts/validate-gate.py RESEARCH concursos/hacker
-<span class="comment"># PASSED → Avancar  |  BLOCKED → Lista o que falta</span>
-        </div>
       </div>
 
       <div class="card warning">
-        <h3>FASE 2: Briefing HELIX (60-90 min - Sistema + Humano)</h3>
-        <div class="code-block">
-/helix-system-agent
-<span class="comment"># ou</span>
-"preencha briefing HELIX para concursos/hacker"
-        </div>
-        <p><strong>10 Fases:</strong></p>
+        <h3>Cliches Proibidos (Nicho Concursos)</h3>
         <table>
-          <tr><th>Fase</th><th>Conteudo</th><th>Automacao</th></tr>
-          <tr><td>1-4</td><td>Identificacao, Mineracao, Avatar, Angulos</td><td>100% auto</td></tr>
-          <tr><td><strong>5</strong></td><td><strong>MUP (Mecanismo Unico do Problema)</strong></td><td><strong>DECISAO HUMANA</strong></td></tr>
-          <tr><td><strong>6</strong></td><td><strong>MUS (Mecanismo Unico da Solucao)</strong></td><td><strong>DECISAO HUMANA</strong></td></tr>
-          <tr><td>7-8</td><td>Big Offer, Stack, Pitch</td><td>70-100% auto</td></tr>
-          <tr><td>9-10</td><td>Criativos, Validacao STAND</td><td>100% auto</td></tr>
+          <tr>
+            <th>Proibido</th>
+            <th>Substituir por</th>
+          </tr>
+          <tr>
+            <td>"metodo infalivel"</td>
+            <td>Nome proprietario do metodo</td>
+          </tr>
+          <tr>
+            <td>"passe em menos tempo"</td>
+            <td>Prazo especifico + contexto</td>
+          </tr>
+          <tr>
+            <td>"decoreba nao funciona"</td>
+            <td>Problema especifico</td>
+          </tr>
+          <tr>
+            <td>"estudar de forma inteligente"</td>
+            <td>Tecnica nomeada</td>
+          </tr>
         </table>
-        <p style="margin-top:0.5rem"><strong>Nas Fases 5 e 6:</strong></p>
-        <div class="code-block">
-<span class="comment"># Sistema apresenta 3 opcoes de MUP/MUS</span>
-<span class="comment"># Voce responde:</span>
-"Opcao 2"
-"Combine opcoes 1 e 3"
-"Crie novo baseado em [sua ideia]"
-        </div>
-        <p><strong>Validar MUP/MUS:</strong></p>
-        <div class="code-block">
-/copy-critic
-"valide o MUP - o avatar realmente acredita?"
-<span class="comment"># Esperar: STAND (ok) | REVISE (ajustar) | ESCALATE (refazer)</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>FASE 3: Producao (30-60 min - Sistema)</h3>
-        <div class="code-block">
-/produce-offer concursos/hacker
-        </div>
-        <p><strong>NOVO v6.0 - Bloqueio Automatico:</strong></p>
-        <div class="code-block">
-<span class="comment"># Se tentar produzir sem research completo:</span>
-BLOQUEADO - Research Gate nao passou
-Missing: synthesis.md, voc/summary.md
-
-<span class="comment"># Escape (use com cautela):</span>
-<span class="highlight">"--force-production /produce-offer concursos/hacker"</span>
-        </div>
-        <p><strong>Produz automaticamente:</strong> VSL + LP (14 blocos) + 7 Criativos + 5 Emails</p>
-        <p><strong>OBRIGATORIO em cada copy - Secao GATE:</strong></p>
-        <div class="code-block">
-## GATE: Arquivos Lidos
-- research/synthesis.md → Sinestesia: "acordar 3AM sem fome"
-- briefings/phases/fase05_mup.md → MUP: "Cortisol Cronificado"
-- briefings/phases/fase06_mus.md → MUS: "Reset Circadiano"
-
-## Consistencia
-- MUP usado: Cortisol Cronificado ← matches briefing ✓
-- VOC refletido: 3 quotes usadas ✓
-        </div>
-        <p><strong>Se copy vier SEM secao GATE → REJEITAR automaticamente.</strong> Pedir refacao.</p>
-      </div>
-
-      <div class="card success">
-        <h3>FASE 4: Validacao (15-30 min - Sistema + Humano)</h3>
-        <div class="code-block">
-<span class="comment"># Multi-modelo review</span>
-/review-all concursos/hacker
-
-<span class="comment"># Stress-test adversarial</span>
-/copy-critic
-        </div>
-        <p><strong>Validacoes:</strong> STAND ≥85% + MUP/MUS consistente + VOC refletido + Compliance</p>
-        <p style="margin-top:0.5rem"><strong>Decisao final do humano:</strong></p>
-        <ul>
-          <li>Li a copy completa?</li>
-          <li>MUP/MUS fazem sentido para o avatar?</li>
-          <li>Linguagem esta natural (nao parece IA)?</li>
-          <li>Pronto para publicar?</li>
-        </ul>
+        <p style="margin-top: var(--space-md)"><strong>Palavras banidas (todos nichos):</strong></p>
+        <div class="code-block" style="margin-bottom: 0">revolucionario, inovador, incrivel, inacreditavel,
+transformacao, jornada, desbloquear, empoderar,
+segredo (sem especificacao), metodo (sem nome proprio)</div>
       </div>
     </div>
   </section>
 
-  <!-- PARTE 6: DECISOES -->
-  <section id="decisoes">
-    <div class="container">
-      <h2 class="section-title"><span class="section-number">6</span> Quando Usar o Que</h2>
-
-      <div class="card">
-        <h3>Slash Commands vs Prompts</h3>
-        <table>
-          <tr><th>Use / quando...</th><th>Use prompt quando...</th></tr>
-          <tr><td>Quer executar fase INTEIRA</td><td>Quer tarefa ESPECIFICA</td></tr>
-          <tr><td>/squad-research (toda pesquisa)</td><td>"extraia VOC so do YouTube"</td></tr>
-          <tr><td>/produce-offer (todos deliverables)</td><td>"crie 3 criativos de raiva"</td></tr>
-          <tr><td>/review-all (validacao completa)</td><td>"valide so o MUP"</td></tr>
-        </table>
-      </div>
-
-      <div class="card">
-        <h3>Tabela Completa de Comandos</h3>
-        <table>
-          <tr><th>Situacao</th><th>Comando/Prompt</th></tr>
-          <tr><td>Comecar oferta nova</td><td><code>/ecosystem-guide</code></td></tr>
-          <tr><td>Research (paralelo, rapido)</td><td><code>/squad-research [oferta]</code></td></tr>
-          <tr><td>Research (sequencial)</td><td><code>/helix-parallel [oferta]</code></td></tr>
-          <tr><td>Briefing HELIX</td><td><code>/helix-system-agent</code></td></tr>
-          <tr><td>Producao completa</td><td><code>/produce-offer [oferta]</code></td></tr>
-          <tr><td>Criativos especificos</td><td>"crie 5 criativos para [oferta]"</td></tr>
-          <tr><td>Landing Page</td><td>"crie landing page para [oferta]"</td></tr>
-          <tr><td>VSL Script</td><td>"crie VSL para [oferta]"</td></tr>
-          <tr><td>Validar copy</td><td><code>/copy-critic</code></td></tr>
-          <tr><td>Stress-test</td><td>"testa essa copy" / "sera que funciona?"</td></tr>
-          <tr><td>Review multi-modelo</td><td><code>/review-all [oferta]</code></td></tr>
-          <tr><td>Ver estado da oferta</td><td>"em que fase esta [oferta]?"</td></tr>
-          <tr><td>Continuar trabalho</td><td>"continue o briefing do [oferta]"</td></tr>
-          <tr><td>Enviar para Claude.ai</td><td><code>/sync-project</code></td></tr>
-        </table>
-      </div>
-
-      <div class="card highlight">
-        <h3>Arvore de Decisao</h3>
-        <div class="decision-tree">
-<span class="q">O que preciso fazer?</span>
-
-<span class="q">→ COMECAR oferta nova?</span>
-  <span class="yes">/ecosystem-guide</span>
-
-<span class="q">→ PESQUISAR?</span>
-  Tudo de uma vez? <span class="yes">/squad-research [oferta]</span>
-  So VOC? <span class="yes">"extraia VOC do YouTube para [oferta]"</span>
-  So concorrentes? <span class="yes">"faca Ads Library Spy para [oferta]"</span>
-
-<span class="q">→ BRIEFING?</span>
-  <span class="yes">/helix-system-agent</span>
-  Validar MUP? <span class="yes">/copy-critic</span>
-
-<span class="q">→ PRODUZIR?</span>
-  Tudo? <span class="yes">/produce-offer [oferta]</span>
-  So criativos? <span class="yes">"crie criativos para [oferta]"</span>
-  So LP? <span class="yes">"crie landing page para [oferta]"</span>
-
-<span class="q">→ VALIDAR?</span>
-  Completo? <span class="yes">/review-all [oferta]</span>
-  Stress-test? <span class="yes">/copy-critic</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARTE 7: TROUBLESHOOTING -->
+  <!-- TROUBLESHOOTING -->
   <section id="troubleshooting">
     <div class="container">
-      <h2 class="section-title"><span class="section-number">7</span> Troubleshooting</h2>
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div>
+          <h2 class="section-title">Troubleshooting</h2>
+          <p class="section-subtitle">Problemas comuns e solucoes rapidas</p>
+        </div>
+      </div>
 
-      <div class="card danger">
-        <h3>"Nao sei onde parei"</h3>
-        <div class="code-block">
-<span class="comment"># Opcao 1: Perguntar</span>
-/ecosystem-guide
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Nao sei onde parei"</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <div class="code-block">
+<span class="command">/ecosystem-guide</span>
+<span class="comment"># ou</span>
 "em que fase esta concursos/hacker?"
-
-<span class="comment"># Opcao 2: Ver estado direto</span>
 "leia concursos/hacker/project_state.yaml"
-
-<span class="comment"># Opcao 3: Rodar validacao</span>
-python3 scripts/validate-gate.py RESEARCH concursos/hacker
+          </div>
         </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Apify falhou / Playwright timeout"</h3>
-        <div class="code-block">
-<span class="comment"># Sistema tenta automaticamente:</span>
-<span class="comment"># Apify → Playwright → Firecrawl → WebSearch</span>
-
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Apify/Playwright timeout"</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Sistema tenta automaticamente: Apify -> Playwright -> Firecrawl -> WebSearch</p>
+          <div class="code-block">
 <span class="comment"># Se todos falharem:</span>
-"extraia comentarios de [URL especifica] usando Playwright"
+"extraia comentarios de [URL] usando Playwright"
 "busque quotes sobre [topico] no Reddit usando Firecrawl"
+          </div>
         </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Copy generica / sem personalidade"</h3>
-        <ul>
-          <li>Verificar se tem <strong>secao GATE</strong> na copy</li>
-          <li>Se NAO tem → sistema nao leu arquivos obrigatorios</li>
-          <li>Solucao: "refaca lendo os arquivos obrigatorios"</li>
-          <li>Se elementos sao <strong>genericos</strong>: "releia e extraia exemplos ESPECIFICOS"</li>
-        </ul>
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Copy generica / sem personalidade"</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <ul>
+            <li>Verificar se tem <strong>secao GATE</strong> na copy</li>
+            <li>Se NAO tem -> sistema nao leu arquivos obrigatorios</li>
+            <li>Solucao: "refaca lendo os arquivos obrigatorios"</li>
+            <li>Se elementos sao genericos: "releia e extraia exemplos ESPECIFICOS"</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Gate bloqueado"</h3>
-        <div class="code-block">
-<span class="comment"># Opcao 1: MCP Tool (RECOMENDADO - v5.5+)</span>
-<span class="highlight">validate_gate gate_type="research" offer_path="concursos/hacker"</span>
-
-<span class="comment"># Opcao 2: Script Python (legado)</span>
-python3 scripts/validate-gate.py RESEARCH concursos/hacker
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Gate bloqueado"</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <div class="code-block">
+<span class="comment"># MCP Tool (v5.5+):</span>
+<span class="command">validate_gate gate_type="research" offer_path="concursos/hacker"</span>
 
 <span class="comment"># Output mostra EXATAMENTE o que falta</span>
 <span class="comment"># Exemplo: "MISSING: voc/trends-analysis.md"</span>
-<span class="comment"># Acao: "complete o trends-analysis para hacker"</span>
+          </div>
         </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Contexto poluido / confuso"</h3>
-        <div class="code-block">
-<span class="comment"># Compactar (mantendo contexto importante):</span>
-/compact
-
-<span class="comment"># Limpar completamente:</span>
-/clear
-
-<span class="comment"># Rebootar com contexto fresco:</span>
-"leia concursos/hacker/project_state.yaml e me diga o status"
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Gate bloqueou producao" (v6.0)</span>
+          <span class="icon">+</span>
         </div>
-      </div>
-
-      <div class="card danger">
-        <h3>"Claude ignorou instrucoes"</h3>
-        <ul>
-          <li>Verificar se abriu da <strong>raiz</strong> (regra #1)</li>
-          <li>Verificar se <code>~/.claude/CLAUDE.md</code> existe e esta correto</li>
-          <li><code>/compact</code> se contexto esta muito grande</li>
-          <li>Repetir instrucao de forma mais explicita</li>
-        </ul>
-      </div>
-
-      <div class="card danger">
-        <h3>"Gate bloqueou producao" (NOVO v6.0)</h3>
-        <div class="code-block">
-<span class="comment"># Mensagem tipica:</span>
-BLOQUEADO - Research Gate nao passou
-Missing: synthesis.md, voc/summary.md, ads-library-spy.md
-
+        <div class="accordion-content">
+          <div class="code-block">
 <span class="comment"># Solucao 1: Completar research</span>
 "complete o research para concursos/hacker"
 /squad-research concursos/hacker
 
 <span class="comment"># Solucao 2: Escape (use com cautela)</span>
 <span class="highlight">"--force-production crie criativos para X"</span>
+          </div>
         </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Genericidade Score baixo" (NOVO v6.0)</h3>
-        <div class="code-block">
-<span class="comment"># Warning tipico:</span>
-WARNING: Genericidade Score 5/10
-Concorrente poderia usar sem alteracao
-
-<span class="comment"># Solucao:</span>
-1. Adicionar nome PROPRIETARIO para o metodo
-2. Incluir numeros ESPECIFICOS (nao arredondados)
-3. Usar linguagem da VOC (nao generica)
-4. Adicionar prova social ESPECIFICA (nomes, datas)
-
-<span class="comment"># Pedir refacao:</span>
-"refaca com mais especificidade - adicione nome do metodo e numeros"
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Genericidade Score baixo" (v6.0)</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <p>Solucao:</p>
+          <ul>
+            <li>Adicionar nome PROPRIETARIO para o metodo</li>
+            <li>Incluir numeros ESPECIFICOS (nao arredondados)</li>
+            <li>Usar linguagem da VOC (nao generica)</li>
+            <li>Adicionar prova social ESPECIFICA (nomes, datas)</li>
+          </ul>
+          <div class="code-block">"refaca com mais especificidade - adicione nome do metodo e numeros"</div>
         </div>
       </div>
 
-      <div class="card danger">
-        <h3>"Cliches detectados" (NOVO v6.0)</h3>
-        <div class="code-block">
-<span class="comment"># Warning tipico:</span>
-WARNING: Cliche detectado: "metodo infalivel"
-Substituir por: nome proprietario do metodo
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span>"Contexto poluido / confuso"</span>
+          <span class="icon">+</span>
+        </div>
+        <div class="accordion-content">
+          <div class="code-block">
+<span class="comment"># Compactar (mantendo contexto importante):</span>
+<span class="command">/compact</span>
 
-<span class="comment"># Solucao:</span>
-"substitua 'metodo infalivel' por 'Sistema HELIX'"
-"refaca sem usar palavras banidas"
+<span class="comment"># Limpar completamente:</span>
+<span class="command">/clear</span>
 
-<span class="comment"># Ver lista completa:</span>
-~/.claude/rules/anti-homogeneization.md
+<span class="comment"># Rebootar com contexto fresco:</span>
+"leia concursos/hacker/project_state.yaml e me diga o status"
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PARTE 8: CHECKLIST -->
+  <!-- CHECKLIST INTERATIVO -->
   <section id="checklist">
     <div class="container">
-      <h2 class="section-title"><span class="section-number">8</span> Checklist Interativo</h2>
+      <div class="section-header">
+        <div class="section-number">5</div>
+        <div>
+          <h2 class="section-title">Checklist Interativo</h2>
+          <p class="section-subtitle">Acompanhe seu progresso (salvo localmente)</p>
+        </div>
+      </div>
 
       <div class="checklist-section" data-phase="0">
-        <h3>Fase 0 - Setup <span class="status">0/4</span></h3>
+        <div class="checklist-header">
+          <h3>Fase 0 - Setup</h3>
+          <span class="checklist-status">0/4</span>
+        </div>
         <label class="checklist-item"><input type="checkbox"><span>Abri Claude Code da raiz (~/copywriting-ecosystem)</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Estrutura da oferta criada (/ecosystem-guide)</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Biblioteca do nicho verificada</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>Planning files inicializados (task_plan, findings, progress)</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>Planning files inicializados</span></label>
       </div>
 
       <div class="checklist-section" data-phase="1">
-        <h3>Fase 1 - Research <span class="status">0/6</span></h3>
+        <div class="checklist-header">
+          <h3>Fase 1 - Research</h3>
+          <span class="checklist-status">0/6</span>
+        </div>
         <label class="checklist-item"><input type="checkbox"><span>Escolhi metodo: /squad-research ou /helix-parallel</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Research executado com sucesso</span></label>
         <label class="checklist-item"><input type="checkbox"><span>200+ quotes VOC extraidas</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>Ads Library Spy com Scale Score calculado</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>synthesis.md com confidence ≥70%</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>Research Gate PASSED (validate-gate.py)</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>Ads Library Spy com Scale Score</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>synthesis.md com confidence >=70%</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>Research Gate PASSED</span></label>
       </div>
 
       <div class="checklist-section" data-phase="2">
-        <h3>Fase 2 - Briefing HELIX <span class="status">0/6</span></h3>
+        <div class="checklist-header">
+          <h3>Fase 2 - Briefing HELIX</h3>
+          <span class="checklist-status">0/6</span>
+        </div>
         <label class="checklist-item"><input type="checkbox"><span>10/10 fases HELIX preenchidas</span></label>
         <label class="checklist-item"><input type="checkbox"><span>EU ESCOLHI opcao de MUP (Fase 5)</span></label>
         <label class="checklist-item"><input type="checkbox"><span>EU ESCOLHI opcao de MUS (Fase 6)</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>MUP validado com /copy-critic (verdict: STAND)</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>MUS validado com /copy-critic (verdict: STAND)</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>MUP validado com /copy-critic (STAND)</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>MUS validado com /copy-critic (STAND)</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Briefing Gate PASSED</span></label>
       </div>
 
       <div class="checklist-section" data-phase="3">
-        <h3>Fase 3 - Producao <span class="status">0/5</span></h3>
+        <div class="checklist-header">
+          <h3>Fase 3 - Producao</h3>
+          <span class="checklist-status">0/5</span>
+        </div>
         <label class="checklist-item"><input type="checkbox"><span>/produce-offer executado</span></label>
         <label class="checklist-item"><input type="checkbox"><span>VSL + LP + Criativos + Emails prontos</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Secao GATE presente em TODAS copys</span></label>
         <label class="checklist-item"><input type="checkbox"><span>MUP/MUS consistente em todos deliverables</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>Production Gate PASSED</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>Genericidade Score >= 8/10</span></label>
       </div>
 
       <div class="checklist-section" data-phase="4">
-        <h3>Fase 4 - Validacao Final <span class="status">0/4</span></h3>
+        <div class="checklist-header">
+          <h3>Fase 4 - Validacao Final</h3>
+          <span class="checklist-status">0/4</span>
+        </div>
         <label class="checklist-item"><input type="checkbox"><span>/review-all executado (multi-modelo)</span></label>
-        <label class="checklist-item"><input type="checkbox"><span>STAND Score ≥85%</span></label>
+        <label class="checklist-item"><input type="checkbox"><span>STAND Score >=85%</span></label>
         <label class="checklist-item"><input type="checkbox"><span>Stress-test /copy-critic PASSED</span></label>
         <label class="checklist-item"><input type="checkbox"><span>EU LI tudo e APROVEI - PRONTO para publicar</span></label>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <p>Copy Chief Ecosystem v6.0 - Tutorial Definitivo (Nivel Jarvis)</p>
+      <p>Copy Chief Ecosystem <span class="arc">v6.0</span> - Jarvis Mode</p>
       <p>Built with Claude Code + copywriting-mcp + Gate Enforcement</p>
     </div>
   </footer>
 
+  <!-- PROGRESS TRACKER (Mobile) -->
+  <div class="progress-tracker">
+    <div class="progress-tracker-content">
+      <span class="progress-label">Progresso</span>
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+      </div>
+      <span class="progress-label" id="progressPercent">0%</span>
+    </div>
+  </div>
+
   <script>
+    // Toggle Accordion
     function toggleAccordion(header) {
-      const a = header.parentElement;
-      a.classList.toggle('open');
-      header.querySelector('span:last-child').textContent = a.classList.contains('open') ? '-' : '+';
+      const accordion = header.parentElement;
+      accordion.classList.toggle('open');
     }
 
-    document.querySelectorAll('.checklist-item input').forEach(cb => {
-      cb.addEventListener('change', function() {
+    // Toggle Mobile Nav
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // Checklist Logic
+    document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
         const item = this.closest('.checklist-item');
-        const sec = this.closest('.checklist-section');
+        const section = this.closest('.checklist-section');
+
         item.classList.toggle('checked', this.checked);
-        const total = sec.querySelectorAll('input').length;
-        const checked = sec.querySelectorAll('input:checked').length;
-        const st = sec.querySelector('.status');
-        st.textContent = `${checked}/${total}`;
-        st.classList.toggle('complete', checked === total);
+
+        const total = section.querySelectorAll('input').length;
+        const checked = section.querySelectorAll('input:checked').length;
+        const status = section.querySelector('.checklist-status');
+
+        status.textContent = `${checked}/${total}`;
+        status.classList.toggle('complete', checked === total);
+
         saveProgress();
+        updateGlobalProgress();
       });
     });
 
     function saveProgress() {
-      const s = {};
-      document.querySelectorAll('.checklist-section').forEach(sec => {
-        s[sec.dataset.phase] = [];
-        sec.querySelectorAll('input').forEach((i, idx) => { s[sec.dataset.phase][idx] = i.checked; });
+      const state = {};
+      document.querySelectorAll('.checklist-section').forEach(section => {
+        state[section.dataset.phase] = [];
+        section.querySelectorAll('input').forEach((input, idx) => {
+          state[section.dataset.phase][idx] = input.checked;
+        });
       });
-      localStorage.setItem('tutorial-v6', JSON.stringify(s));
+      localStorage.setItem('tutorial-v6-jarvis', JSON.stringify(state));
     }
 
     function loadProgress() {
-      const saved = localStorage.getItem('tutorial-v6');
+      const saved = localStorage.getItem('tutorial-v6-jarvis');
       if (!saved) return;
-      const s = JSON.parse(saved);
-      Object.entries(s).forEach(([p, items]) => {
-        const sec = document.querySelector(`[data-phase="${p}"]`);
-        if (!sec) return;
-        sec.querySelectorAll('input').forEach((i, idx) => {
-          if (items[idx]) { i.checked = true; i.dispatchEvent(new Event('change')); }
+
+      const state = JSON.parse(saved);
+      Object.entries(state).forEach(([phase, items]) => {
+        const section = document.querySelector(`[data-phase="${phase}"]`);
+        if (!section) return;
+
+        section.querySelectorAll('input').forEach((input, idx) => {
+          if (items[idx]) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change'));
+          }
         });
       });
     }
 
+    function updateGlobalProgress() {
+      const total = document.querySelectorAll('.checklist-item input').length;
+      const checked = document.querySelectorAll('.checklist-item input:checked').length;
+      const percent = Math.round((checked / total) * 100);
+
+      document.getElementById('progressBarFill').style.width = percent + '%';
+      document.getElementById('progressPercent').textContent = percent + '%';
+    }
+
+    // Scroll Progress
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('navProgress').style.width = scrolled + '%';
+    });
+
+    // Active Nav Link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Init
     loadProgress();
+    updateGlobalProgress();
   </script>
 </body>
 </html>
